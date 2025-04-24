@@ -1,26 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: #d2691e;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  img {
+    @apply block w-full h-full object-cover;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .Container {
+    @apply flex flex-col items-center justify-center gap-16 w-full max-w-[1400px] mx-auto py-10 px-4 lg:py-20 lg:px-[120px];
+  }
+
+  .title {
+    @apply text-primary text-lg lg:text-2xl;
+  }
+
+  .title_section {
+    @apply text-3xl font-semibold text-[#464646] leading-[1.25em] lg:text-5xl;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
