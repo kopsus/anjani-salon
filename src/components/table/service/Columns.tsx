@@ -37,16 +37,6 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
   {
     accessorKey: "description",
     header: "Deskripsi",
-    cell: ({ row }) => {
-      const descriptions = row.getValue("description") as string[];
-      return (
-        <ul className="list-disc">
-          {descriptions.map((desc, index) => (
-            <li key={index}>{desc}</li>
-          ))}
-        </ul>
-      );
-    },
   },
   {
     enablePinning: true,
