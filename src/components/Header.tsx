@@ -1,6 +1,6 @@
 "use client";
 
-// import Image from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
 import { Fade as Hamburger } from "hamburger-react";
@@ -17,19 +17,19 @@ const Header = () => {
 
   const menuItems = [
     {
-      label: "Home",
+      label: "Beranda",
       link: "/",
     },
     {
-      label: "About",
+      label: "Tentang",
       link: "/about",
     },
     {
-      label: "Products",
+      label: "Produk",
       link: "/product",
     },
     {
-      label: "Services",
+      label: "Layanan",
       link: "/service",
     },
   ];
@@ -41,16 +41,9 @@ const Header = () => {
           className={`${
             isOpen && "bg-slate-100 lg:bg-transparent"
           } flex items-center justify-between p-4 lg:py-3 lg:px-8 max-w-[1400px] mx-auto`}
-          // style={{ backdropFilter: isOpen ? "blur(5px)" : "" }}
         >
-          <div className="w-[139px] h-10 bg-primary">
-            {/* <Image
-            src="https://framerusercontent.com/images/GZBn3wsOsp0RSKKoutQ6E7oMT9o.png"
-            alt=""
-            width={0}
-            height={0}
-            sizes="100vw"
-            /> */}
+          <div className="w-16 h-16 lg:h-20 lg:w-20 overflow-hidden rounded-full p-3 bg-black">
+            <Image src="/logo.jpg" alt="" width={0} height={0} sizes="100vw" />
           </div>
           <div
             className={`${
@@ -78,7 +71,7 @@ const Header = () => {
                 textColor="text-white"
                 borderColor="border border-transparent"
               >
-                Contact Us
+                Kontak
               </Button>
             </div>
           </div>
@@ -90,7 +83,7 @@ const Header = () => {
               textColor="text-white"
               borderColor="border border-transparent"
             >
-              Contact Us
+              Kontak
             </Button>
           </div>
           <div className="lg:hidden">

@@ -9,11 +9,13 @@ interface ButtonProps {
   textColor?: string; // warna text normal
   hoverTextColor?: string; // warna text pas hover
   borderColor?: string; // warna border
+  className?: string;
 }
 
 export default function Button({
   href,
   children,
+  className,
   bgColor = "bg-white",
   hoverBgColor = "hover:bg-primary",
   textColor = "text-black",
@@ -23,7 +25,7 @@ export default function Button({
   return (
     <Link
       href={href}
-      className={`flex items-center gap-4 pr-[5px] pl-4 rounded-full py-1 transition-all group ${bgColor} ${textColor} ${borderColor} ${hoverBgColor} ${hoverTextColor}`}
+      className={`${className} flex items-center gap-4 pr-[5px] pl-4 rounded-full py-1 transition-all group ${bgColor} ${textColor} ${borderColor} ${hoverBgColor} ${hoverTextColor}`}
     >
       {children}
       <div

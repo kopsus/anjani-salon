@@ -1,4 +1,4 @@
-import About1 from "@/components/about/About1";
+import About from "@/components/About";
 import HeroHome from "@/components/hero/Home";
 import Products from "@/components/Products";
 import Services from "@/components/Services";
@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div className="relative overflow-hidden">
       <HeroHome />
-      <About1 />
+      <About />
       <Services />
       <Products />
       <Testimoni />

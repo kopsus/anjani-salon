@@ -1,8 +1,9 @@
 import React from "react";
 import Button from "./Button";
-// import Image from "next/image";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa6";
+import Image from "next/image";
+import { FaInstagram } from "react-icons/fa6";
 import Link from "next/link";
+import { IoLogoWhatsapp } from "react-icons/io";
 
 const Footer = () => {
   return (
@@ -21,7 +22,7 @@ const Footer = () => {
               strengthen your cybersecurity.
             </p>
           </div>
-          <Button href="#">Contact Us</Button>
+          <Button href="#">Hubungi Kami</Button>
         </div>
       </div>
       <div className="flex flex-col gap-[10px] pt-16 lg:px-14">
@@ -29,29 +30,29 @@ const Footer = () => {
           <div className="lg:min-w-[60%] flex flex-col gap-12 lg:flex-row lg:gap-0 lg:justify-between">
             <div className="flex flex-col gap-4 lg:min-w-[257px] lg:max-w-[40%]">
               <div className="flex flex-col gap-2">
-                <div className="w-[139px] h-8 bg-primary"></div>
-                {/* <Image
-                  src="https://framerusercontent.com/images/GZBn3wsOsp0RSKKoutQ6E7oMT9o.png"
-                  alt=""
-                  className="w-[139px] h-auto"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                /> */}
+                <div className="w-14 lg:w-16">
+                  <Image
+                    src="/logo.png"
+                    alt=""
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                  />
+                </div>
                 <p className="w-full lg:w-[257px] text-sm text-[#464646]">
                   Securing Your Digital World: Your Trusted Partner in Data
                   Protection with Cutting Edge Solutions for Data Security.
                 </p>
               </div>
               <div className="flex items-center gap-4">
-                <Link href="https://facebook.com" target="_blank">
-                  <FaFacebook className="size-8" />
-                </Link>
-                <Link href="https://instagram.com" target="_blank">
+                <Link
+                  href={"https://www.instagram.com/anjani_beautycenter/"}
+                  target="_blank"
+                >
                   <FaInstagram className="size-8" />
                 </Link>
-                <Link href="https://twitter.com" target="_blank">
-                  <FaTwitter className="size-8" />
+                <Link href={"https://wa.me/+6287724002299"} target="_blank">
+                  <IoLogoWhatsapp className="size-8" />
                 </Link>
               </div>
             </div>

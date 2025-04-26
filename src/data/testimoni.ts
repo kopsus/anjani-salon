@@ -1,47 +1,32 @@
 export const dataTestimoni = [
   {
-    name: "John Merrington",
-    title: "CEO @ FindX",
+    name: "Dewi Anggraini",
     rating: 5,
-    image:
-      "https://framerusercontent.com/images/WMXsdTmJjGBkyNpwfFB0OQyIzE.jpg?scale-down-to=512",
     review:
-      "After a few security scares in our neighborhood, we turned to Nemo Security for help. They installed a comprehensive.",
+      "Saya sangat puas dengan pelayanan di salon ini. Hasil potong rambutnya sangat rapi dan sesuai dengan keinginan saya. Stafnya juga ramah dan profesional.",
   },
   {
-    name: "Sarah Jacobs",
-    title: "COO @ InnovateX",
+    name: "Siti Rahayu",
     rating: 4,
-    image:
-      "https://framerusercontent.com/images/WMXsdTmJjGBkyNpwfFB0OQyIzE.jpg?scale-down-to=512",
     review:
-      "Nemo Security has been instrumental in improving our workplace security. The team was professional, responsive, and efficient.",
+      "Layanan facial di sini luar biasa! Kulit saya terasa lebih segar dan halus setelah perawatan. Hanya saja, waktu tunggunya agak lama, tapi worth it.",
   },
   {
-    name: "Mike Thompson",
-    title: "CTO @ TechLabs",
+    name: "Nina Wulandari",
     rating: 5,
-    image:
-      "https://framerusercontent.com/images/WMXsdTmJjGBkyNpwfFB0OQyIzE.jpg?scale-down-to=512",
     review:
-      "The installation was quick and seamless. We feel much safer knowing that Nemo Security is monitoring our premises 24/7.",
+      "Salon ini benar-benar tempat yang nyaman untuk perawatan kecantikan. Pijat refleksinya sangat menenangkan, dan stafnya sangat perhatian terhadap kenyamanan saya.",
   },
   {
-    name: "Emily Rogers",
-    title: "Marketing Director @ Brandify",
+    name: "Agnes Yuliana",
     rating: 4,
-    image:
-      "https://framerusercontent.com/images/WMXsdTmJjGBkyNpwfFB0OQyIzE.jpg?scale-down-to=512",
     review:
-      "We had a great experience with Nemo Security. Their customer service was top-notch, and the system is very user-friendly.",
+      "Saya mencoba perawatan rambut di sini, dan hasilnya sangat memuaskan. Warna rambut saya terlihat sangat natural. Harga sesuai dengan kualitas pelayanan.",
   },
   {
-    name: "Carlos Gutierrez",
-    title: "Founder @ SecureHome",
+    name: "Rina Sari",
     rating: 5,
-    image:
-      "https://framerusercontent.com/images/WMXsdTmJjGBkyNpwfFB0OQyIzE.jpg?scale-down-to=512",
     review:
-      "Nemo Security helped us secure our office building and provide peace of mind to our employees. Highly recommended for any business.",
+      "Salon ini tempat yang tepat untuk perawatan kuku. Hasil manicure dan pedicure saya sangat bagus, dan suasananya sangat nyaman. Pasti akan kembali lagi!",
   },
 ];
