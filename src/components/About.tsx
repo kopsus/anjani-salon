@@ -10,7 +10,7 @@ const About = ({ isClamp = true }: AboutProps) => {
   return (
     <article className="w-full max-w-[1400px] mx-auto py-10 px-4 lg:py-20 lg:px-[120px]">
       <Image
-        src="/beauty-salon.png"
+        src="/beauty-salon-2.jpg"
         alt=""
         width={0}
         height={0}

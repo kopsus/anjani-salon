@@ -42,7 +42,7 @@ const Header = () => {
             isOpen && "bg-slate-100 lg:bg-transparent"
           } flex items-center justify-between p-4 lg:py-3 lg:px-8 max-w-[1400px] mx-auto`}
         >
-          <div className="w-16 h-16 lg:h-20 lg:w-20 overflow-hidden rounded-full p-3 bg-black">
+          <div className="w-16 h-16 overflow-hidden rounded-full p-3 bg-black">
             <Image src="/logo.jpg" alt="" width={0} height={0} sizes="100vw" />
           </div>
           <div

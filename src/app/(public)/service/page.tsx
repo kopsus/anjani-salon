@@ -2,6 +2,7 @@ import CardService from "@/components/card/Service";
 import HeroService from "@/components/hero/Service";
 import PriceListService from "@/components/pricelist/Service";
 import Testimoni from "@/components/Testimoni";
+import Video from "@/components/Video";
 import { dataService } from "@/data/services";
 import React from "react";
 
@@ -14,6 +15,7 @@ const page = () => {
           <CardService key={item.id} item={item} />
         ))}
       </div>
+      <Video />
       <PriceListService />
       <Testimoni />
     </>

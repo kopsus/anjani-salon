@@ -1,0 +1,22 @@
+export const dataVideo = [
+  {
+    video:
+      "https://drive.google.com/file/d/17HWCZNBcFBQuJklOkTMCIfUxqiz9fDk3/view?usp=drive_link",
+  },
+  {
+    video:
+      "https://drive.google.com/file/d/1hu9JdO23icY-lW1TA9H4qMPip79gbY0C/view?usp=drive_link",
+  },
+  {
+    video:
+      "https://drive.google.com/file/d/1KhKmsoC23_CjKLuYz8xGMmrx7_BhVV3Y/view?usp=drive_link",
+  },
+  {
+    video:
+      "https://drive.google.com/file/d/1NofcEDjcdsJjOZXkVsaL8nZZC-3tl7fe/view?usp=drive_link",
+  },
+  {
+    video:
+      "https://drive.google.com/file/d/1sEJaEReLifyUP0io5hIbjEuOMgy2VDwN/view?usp=drive_link",
+  },
+];

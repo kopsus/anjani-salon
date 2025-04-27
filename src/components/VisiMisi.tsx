@@ -12,9 +12,8 @@ const VisiMisi = () => {
           <div className="relative w-full h-full flex flex-col gap-2 justify-end p-5 lg:p-10 text-white">
             <p className="title_section text-primary">VISI</p>
             <p className="text-lg font-normal">
-              Mewujudkan Desa Sirau yang bersih, sehat, dan lestari melalui
-              pengelolaan sampah berbasis masyarakat website yang kreatif,
-              inovatif, dan berkelanjutan.
+              Menjadi tempat perawatan kecantikan terpercaya dan bisa memberikan
+              rasa percaya diri setiap pelanggan wanita.
             </p>
           </div>
         </div>
@@ -26,12 +25,14 @@ const VisiMisi = () => {
           <div className="relative w-full h-full flex flex-col gap-2 justify-end p-5 lg:p-10 text-white">
             <p className="title_section text-primary">MISI</p>
             <ul className="list-disc pl-5 text-lg">
-              <li>Meningkatkan Kesadaran Masyarakat</li>
-              <li>Mengembangkan Sistem Pengelolaan Sampah</li>
-              <li>Mendorong Pemanfaatan Sampah</li>
-              <li>Memperkuat Kolaborasi dan Kemitraan</li>
-              <li>Menciptakan Peluang Ekonomi Baru</li>
-              <li>Menjaga Keberlanjutan Lingkungan</li>
+              <li>
+                Menyediakan perawatan kecantikan dengan harga yang lebih
+                terjangkau di segala tingkatan ekonomi.
+              </li>
+              <li>
+                Mendahulukan kesehatan kulit setiap pelanggan dan
+                memberi pelayanan prima
+              </li>
             </ul>
           </div>
         </div>
