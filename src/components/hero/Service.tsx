@@ -18,11 +18,11 @@ const HeroService = () => {
           <p className="title">home / services</p>
           <p className="title_section">Our Service</p>
         </div>
-        <p className="text-[#464646] text-xl text-center lg:max-w-[60%] mx-auto">
-          Equipping professionals with the knowledge and skills to conduct
-          penetration testing effectively and ethically. Participants learn
-          methodologies, tools, and techniques to identify vulnerabilities and
-          strengthen security defenses.
+        <p className="text-[#464646] text-xl text-center lg:max-w-[65%] mx-auto">
+          Memberikan pelayanan terbaik dengan sentuhan profesional, untuk
+          membantu Anda tampil lebih percaya diri dan memancarkan kecantikan
+          alami dari dalam. Kami menggunakan metode, teknik, dan produk pilihan
+          untuk hasil perawatan yang maksimal dan memuaskan.
         </p>
       </div>
     </div>

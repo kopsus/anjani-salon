@@ -26,7 +26,7 @@ const CardService = ({ item }: { item: TypeService }) => {
           />
         </div>
       </div>
-      <Button href={`#`}>Booking Now</Button>
+      <Button href={`https://wa.me/+6287724002299`}>Booking Now</Button>
     </div>
   );
 };

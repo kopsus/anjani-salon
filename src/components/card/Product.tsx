@@ -3,6 +3,7 @@ import { Card } from "../ui/card";
 import { TypeProduct } from "@/types/product";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const CardProduct = ({ item }: { item: TypeProduct }) => {
   return (
@@ -23,7 +24,15 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
         <p className="text-lg font-semibold">{item.title}</p>
         <p className="font-bold">Rp. {item.price}</p>
       </div>
-      <Button className="text-white rounded-full cursor-pointer">Order</Button>
+      <Link
+        href={"https://wa.me/+6287724002299"}
+        target="_blank"
+        className="w-full"
+      >
+        <Button className="text-white rounded-full cursor-pointer w-full">
+          Order
+        </Button>
+      </Link>
     </Card>
   );
 };

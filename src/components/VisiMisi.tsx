@@ -6,7 +6,7 @@ const VisiMisi = () => {
       <div className="grid md:grid-cols-2 justify-center gap-10">
         <div
           className="relative bg-center bg-no-repeat h-96 md:h-[443px] lg:h-[553px] bg-cover rounded-xl overflow-hidden"
-          style={{ backgroundImage: `url(${"/beauty-salon.png"})` }}
+          style={{ backgroundImage: `url(${"/beauty-salon.jpg"})` }}
         >
           <div className="absolute top-0 left-0 w-full h-full bg-black/50" />
           <div className="relative w-full h-full flex flex-col gap-2 justify-end p-5 lg:p-10 text-white">

@@ -6,7 +6,7 @@ const HeroAbout = () => {
     <div className="w-full relative pt-[120px] px-4 lg:px-0 lg:pt-0 lg:h-[50vh] flex flex-col justify-end">
       <div className="absolute top-0 left-0 right-0 bottom-0">
         <Image
-          src="/beauty-salon.png"
+          src="https://framerusercontent.com/images/6nect3y8wTTkPP5aufmjYz7ki4.png?scale-down-to=2048"
           alt=""
           width={0}
           height={0}
@@ -19,10 +19,9 @@ const HeroAbout = () => {
           <p className="title_section">Tentang Anjani Beauty center</p>
         </div>
         <p className="text-[#464646] text-xl text-center lg:max-w-[60%] mx-auto">
-          Equipping professionals with the knowledge and skills to conduct
-          penetration testing effectively and ethically. Participants learn
-          methodologies, tools, and techniques to identify vulnerabilities and
-          strengthen security defenses.
+          Kami mengembangkan keterampilan tim kami dengan teknik dan teknologi
+          kecantikan terbaru, memastikan setiap layanan yang diberikan mampu
+          mempercantik, merawat, dan memperkuat pesona alami Anda.
         </p>
       </div>
     </div>

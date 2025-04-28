@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import Button from "../Button";
 import salonIcon from "@/../public/salon-icon.png";
 
 const HeroHome = () => {
@@ -18,14 +17,13 @@ const HeroHome = () => {
       <div className="absolute left-0 right-0 overflow-visible flex flex-col items-start gap-20 min-h-min justify-center pr-8 px-4 top-[120px] lg:pl-[120px] lg:top-[176px]">
         <div className="flex flex-col items-start gap-8 min-h-min justify-center max-w-[560px] overflow-visible w-full relative z-10">
           <p className="text-[32px] lg:text-[56px] leading-[1.35em] tracking-[-.02em] font-semibold">
-            <span className="text-primary">A trusted partner </span>
-            in safeguarding against evolving cyber risks
+            <span className="text-primary">Tempat Terbaik </span>
+            untuk Merawat Pesona Alami Anda
           </p>
           <p>
-            Protect your business with advanced cybersecurity solutions designed
-            to detect, prevent, and respond to evolving threats.
+            Percayakan perawatan diri Anda kepada kami, dengan layanan terbaik
+            untuk mempercantik, merawat, dan memancarkan pesona alami Anda.
           </p>
-          <Button href="#">Learn More</Button>
         </div>
       </div>
       <div

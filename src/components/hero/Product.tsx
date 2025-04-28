@@ -18,11 +18,11 @@ const HeroProduct = () => {
           <p className="title">home / products</p>
           <p className="title_section">Our Products</p>
         </div>
-        <p className="text-[#464646] text-xl text-center lg:max-w-[60%] mx-auto">
-          Equipping professionals with the knowledge and skills to conduct
-          penetration testing effectively and ethically. Participants learn
-          methodologies, tools, and techniques to identify vulnerabilities and
-          strengthen security defenses.
+        <p className="text-[#464646] text-xl text-center lg:max-w-[65%] mx-auto">
+          Menyediakan rangkaian produk perawatan berkualitas tinggi yang
+          diformulasikan khusus untuk menjaga, merawat, dan menyempurnakan
+          kecantikan Anda. Setiap produk kami dipilih dengan cermat untuk
+          memberikan hasil terbaik dan aman digunakan.
         </p>
       </div>
     </div>

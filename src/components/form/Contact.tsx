@@ -6,8 +6,8 @@ const FormContact = () => {
     <form className="flex flex-col gap-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-8">
         <div className="flex flex-col gap-[10px]">
-          <label className="text-sm">Full Name</label>
-          <Input type="text" placeholder="Enter your full name" />
+          <label className="text-sm">Nama Lengkap</label>
+          <Input type="text" placeholder="Nama lengkap" />
         </div>
         <div className="flex flex-col gap-[10px]">
           <label className="text-sm">Email</label>
@@ -15,10 +15,10 @@ const FormContact = () => {
         </div>
       </div>
       <div className="flex flex-col gap-[10px] h-full">
-        <label className="text-sm">Message</label>
+        <label className="text-sm">Pesan Anda</label>
         <textarea
           className="px-4 py-2 outline-primary border border-primary rounded h-44 lg:h-full"
-          placeholder="Enter your full Message"
+          placeholder="Masukan Pesan Anda"
         ></textarea>
       </div>
 

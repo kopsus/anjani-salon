@@ -11,10 +11,10 @@ const Contact = () => {
       <div className="grid lg:grid-cols-2 gap-12">
         <div className="flex flex-col gap-8 text-[#464646]">
           <div className="flex flex-col gap-[10px]">
-            <p className="title_section">Write us a message</p>
+            <p className="title_section">Tuliskan pesan kepada kami</p>
             <p className="lg:text-lg">
-              Send us a message anytime. Our team is ready to assist you
-              promptly.
+              Kirimkan pesan kepada kami kapan saja. Tim kami siap membantu Anda
+              segera.
             </p>
           </div>
           <div className="flex flex-col gap-4">
