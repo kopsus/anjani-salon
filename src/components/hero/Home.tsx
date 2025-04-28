@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import salonIcon from "@/../public/logo-icon.jpg";
+import salonIcon from "@/../public/salon-icon.png";
 
 const HeroHome = () => {
   return (
@@ -26,7 +26,7 @@ const HeroHome = () => {
           </p>
         </div>
       </div>
-      <div
+      {/* <div
         className="absolute overflow-hidden w-[307px] lg:w-[316px] h-[89px] left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-[688px] bottom-10 lg:bottom-[195px] rounded-[20px] bg-[#ffffff80] flex items-center gap-4 z-10"
         style={{ backdropFilter: "blur(30px)" }}
       >
@@ -78,9 +78,9 @@ const HeroHome = () => {
           <p className="text-primary text-[28px] font-bold">140+</p>
           <p className="text-sm text-[#464646]">Pelangan Kami</p>
         </div>
-      </div>
+      </div> */}
       <div
-        className="absolute top-[422px] lg:top-[209px] right-[92px] lg:right-[148px] rounded-[20px] w-[65px] h-[65px] aspect-square bg-[#ffffff80] flex items-center justify-center z-10"
+        className="absolute top-[422px] lg:top-[209px] right-[92px] lg:right-[148px] rounded-[20px] w-[65px] h-[65px] aspect-square bg-slate-50 flex items-center justify-center z-10 overflow-hidden p-2"
         style={{ backdropFilter: "blur(30px)" }}
       >
         <Image
@@ -88,7 +88,7 @@ const HeroHome = () => {
           alt="salon icon"
           width={0}
           height={0}
-          sizes="vw"
+          sizes="100vw"
         />
       </div>
       <div className="contents">

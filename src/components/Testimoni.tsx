@@ -4,13 +4,13 @@ import React from "react";
 
 const Testimoni = () => {
   return (
-    <div className="max-w-[1840px] mx-auto flex flex-col gap-20 py-12 pl-4 lg:pt-20 lg:pl-8 lg:pb-[160px]">
+    <div className="max-w-[1840px] mx-auto flex flex-col gap-20 py-12 lg:pt-20 lg:pb-[160px]">
       <div className="flex flex-col gap-3 lg:max-w-[80%] mx-auto text-center">
         <p className="title">Testimonials</p>
         <p className="title_section">Hear What Our Clients Are Saying</p>
       </div>
       <div
-        className="relative h-[320px] lg:h-[360px] flex items-center gap-8 overflow-x-auto"
+        className="pl-4 lg:pl-8 relative h-[320px] lg:h-[360px] flex items-center gap-8 overflow-x-auto"
         style={{ scrollbarWidth: "none" }}
       >
         {dataTestimoni.map((item, index) => {
