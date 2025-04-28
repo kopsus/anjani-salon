@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import salonIcon from "@/../public/salon-icon.png";
+import salonIcon from "@/../public/logo-icon.jpg";
 
 const HeroHome = () => {
   return (
