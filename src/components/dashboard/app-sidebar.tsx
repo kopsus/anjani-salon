@@ -20,7 +20,7 @@ export async function AppSidebar() {
             <SidebarMenuButton size="lg" asChild>
               <div className="w-full h-full">
                 <Image
-                  src="/salon-icon.png"
+                  src="/logo.png"
                   alt="logo"
                   width={100}
                   height={100}

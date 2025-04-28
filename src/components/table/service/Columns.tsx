@@ -35,10 +35,6 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     },
   },
   {
-    accessorKey: "description",
-    header: "Deskripsi",
-  },
-  {
     enablePinning: true,
     accessorKey: "Aksi",
     header: "Aksi",
