@@ -1,6 +1,6 @@
 import Contact from "@/components/Contact";
 import HeroContact from "@/components/hero/Contact";
-import Questions from "@/components/Question";
+// import Questions from "@/components/Question";
 import React from "react";
 
 const page = () => {
@@ -8,7 +8,7 @@ const page = () => {
     <>
       <HeroContact />
       <Contact />
-      <Questions />
+      {/* <Questions /> */}
     </>
   );
 };

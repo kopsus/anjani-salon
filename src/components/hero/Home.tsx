@@ -92,7 +92,7 @@ const HeroHome = () => {
         />
       </div>
       <div className="contents">
-        <div className="absolute top-[66%] lg:top-1/2 -translate-y-1/2 -right-[47px] lg:-right-[105px] w-[336px] lg:w-[436px] opacity-[0.745055]">
+        <div className="absolute top-[66%] lg:top-1/2 -translate-y-1/2 -right-[47px] lg:-right-[105px] w-[336px] lg:w-[550px] opacity-[0.745055]">
           <Image
             src="https://framerusercontent.com/images/mDLiVaqjca5Rwk6I27LDTWs.png"
             alt="Animated"
