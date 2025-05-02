@@ -5,14 +5,15 @@ import { Card } from "../ui/card";
 import { TypeProduct } from "@/types/product";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { formatIDR } from "@/lib/format";
 
 const CardProduct = ({ item }: { item: TypeProduct }) => {
   const handleOrderClick = () => {
     // Menyusun pesan untuk WhatsApp
-    const message = `Halo, saya ingin membeli produk: ${item.title}. \nHarga: Rp. ${item.price}. \nBagaimana cara ordernya?`;
+    const message = `Halo, saya ingin membeli produk: ${item.title}.`;
 
     // URL WhatsApp dengan pesan
-    const whatsappUrl = `https://wa.me/+6287724002299?text=${encodeURIComponent(
+    const whatsappUrl = `https://wa.me/6287724002299?text=${encodeURIComponent(
       message
     )}`;
 
@@ -36,7 +37,7 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-lg font-semibold">{item.title}</p>
-        <p className="font-bold">Rp. {item.price}</p>
+        <p className="font-bold">{formatIDR(item.price)}</p>
       </div>
 
       <Button

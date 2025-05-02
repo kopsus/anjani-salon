@@ -4,6 +4,8 @@ import Image from "next/image";
 import { TypeService } from "@/types/service";
 
 const CardService = ({ item }: { item: TypeService }) => {
+  const message = `Halo, saya ingin booking untuk layanan: ${item.title}.`;
+
   return (
     <div
       key={item.id}
@@ -26,7 +28,13 @@ const CardService = ({ item }: { item: TypeService }) => {
           />
         </div>
       </div>
-      <Button href={`https://wa.me/+6287724002299`}>Booking Now</Button>
+      <Button
+        href={`https://wa.me/+6287724002299?text=${encodeURIComponent(
+          message
+        )}`}
+      >
+        Booking Now
+      </Button>
     </div>
   );
 };

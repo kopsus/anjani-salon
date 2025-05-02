@@ -10,6 +10,7 @@ interface ButtonProps {
   hoverTextColor?: string; // warna text pas hover
   borderColor?: string; // warna border
   className?: string;
+  onClick?: () => void;
 }
 
 export default function Button({
@@ -21,9 +22,11 @@ export default function Button({
   textColor = "text-black",
   hoverTextColor = "hover:text-white",
   borderColor = "border border-[#eaeaea]",
+  onClick,
 }: ButtonProps) {
   return (
     <Link
+      onClick={onClick}
       href={href}
       className={`${className} flex items-center gap-4 pr-[5px] pl-4 rounded-full py-1 transition-all group ${bgColor} ${textColor} ${borderColor} ${hoverBgColor} ${hoverTextColor}`}
     >
