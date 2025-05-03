@@ -1,8 +1,10 @@
 import React from "react";
-import { dataProducts } from "@/data/products";
 import CardProduct from "./card/Product";
+import prisma from "@/lib/prisma";
 
-const Products = () => {
+const Products = async () => {
+  const products = await prisma.produk.findMany();
+
   return (
     <div className="Container">
       <div className="flex flex-col gap-3 lg:max-w-[80%] items-center justify-center text-center">
@@ -12,7 +14,7 @@ const Products = () => {
         </p>
       </div>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {dataProducts.slice(0, 4).map((item) => (
+        {products.slice(0, 4).map((item) => (
           <CardProduct key={item.id} item={item} />
         ))}
       </div>

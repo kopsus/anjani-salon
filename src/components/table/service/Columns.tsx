@@ -18,13 +18,13 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     header: "Nama",
   },
   {
-    accessorKey: "imageUrl",
+    accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
       return (
         <div className="w-20 h-20 rounded overflow-hidden bg-white">
           <Image
-            src={row.getValue("imageUrl")}
+            src={row.getValue("image")}
             alt="image"
             width={80}
             height={80}
