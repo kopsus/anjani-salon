@@ -52,13 +52,7 @@ export async function login(values: FormLoginSchema) {
       { expiresIn: "7d" }
     );
 
-    (await cookies()).set("session", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // ✅ aman untuk dev
-      sameSite: "lax",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60,
-    });
+    (await cookies()).set("session", token);
 
     return responServerAction({
       statusSuccess: true,
