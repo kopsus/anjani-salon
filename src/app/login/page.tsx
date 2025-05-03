@@ -17,12 +17,41 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import { login } from "@/lib/action/login";
+import { formLoginSchema, FormLoginSchema } from "@/lib/schemas/login";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { z } from "zod";
 
 const LoginPage = () => {
-  const form = useForm();
+  const router = useRouter();
+  // 1. Define your form.
+  const form = useForm<FormLoginSchema>({
+    resolver: zodResolver(formLoginSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  const isSubmitting = form.formState.isSubmitting;
+
+  // 2. Define a submit handler.
+  async function onSubmit(values: z.infer<typeof formLoginSchema>) {
+    const result = await login(values);
+    if (result.success?.status) {
+      toast.success(result.success.message);
+      // redirect to dashboard
+      router.push("/products");
+    }
+
+    if (result.error?.status) {
+      toast.error(result.error.message);
+    }
+  }
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-neutral-100 dark:bg-neutral-800 px-4">
@@ -35,7 +64,7 @@ const LoginPage = () => {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="username"
@@ -71,14 +100,13 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
-              <Link href={"/products"}>
-                <Button
-                  type="submit"
-                  className="w-full mt-3 bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"
-                >
-                  Login
-                </Button>
-              </Link>
+              <Button
+                type="submit"
+                className="w-full mt-3 bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Logging in..." : "Login"}
+              </Button>
             </form>
           </Form>
         </CardContent>

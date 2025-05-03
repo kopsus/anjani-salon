@@ -28,7 +28,7 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
     >
       <div className="bg-slate-200 w-full h-48 rounded-2xl overflow-hidden">
         <Image
-          src={item.image}
+          src={`/uploads/${item.image}`}
           alt={item.title}
           width={0}
           height={0}

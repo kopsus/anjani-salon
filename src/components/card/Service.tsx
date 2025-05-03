@@ -19,7 +19,7 @@ const CardService = ({ item }: { item: TypeService }) => {
         </div>
         <div className="rounded-2xl overflow-hidden">
           <Image
-            src={item.image}
+            src={`/uploads/${item.image}`}
             alt=""
             width={0}
             height={0}
