@@ -27,6 +27,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { TableToolbar } from "./TableToolbar";
+import CreateService from "@/components/form/service/CreateService";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -65,7 +66,9 @@ export function DataTable<TData, TValue>({
     <div className="space-y-4 overflow-x-auto p-4">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-4xl font-bold">{title}</h2>
-        <Button className="text-white">Tambah {title}</Button>
+        <div>
+          <CreateService />
+        </div>
       </div>
       <Card className="p-5 space-y-4">
         <TableToolbar table={table} />

@@ -10,18 +10,18 @@ datasource db {
 model User {
     id        String   @id @default(cuid())
     username  String   @unique
-    password  String?
+    password  String
 }
 
 model Produk {
     id      String  @id @default(cuid())
     image   String
-    title   String
+    title   String  @unique
     price   Int
 }
 
 model Service {
     id      String  @id @default(cuid())
     image   String
-    title   String
+    title   String  @unique
 }

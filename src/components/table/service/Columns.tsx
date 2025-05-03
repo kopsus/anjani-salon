@@ -9,8 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, Eye, MoreHorizontal, Trash } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
+import ViewService from "@/components/form/service/ViewService";
+import EditService from "@/components/form/service/EditService";
+import DeleteService from "@/components/form/service/DeleteService";
 
 export const ColumnsService: ColumnDef<TypeService>[] = [
   {
@@ -21,10 +23,11 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
+      const image = `/uploads/${row.getValue("image")}`;
       return (
         <div className="w-20 h-20 rounded overflow-hidden bg-white">
           <Image
-            src={row.getValue("image")}
+            src={image}
             alt="image"
             width={80}
             height={80}
@@ -38,37 +41,16 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     enablePinning: true,
     accessorKey: "Aksi",
     header: "Aksi",
-    cell: () => (
+    cell: ({ row }) => (
       <DropdownMenu>
-        <DropdownMenuTrigger className="w-full flex justify-end">
+        <DropdownMenuTrigger className="w-full flex justify-end outline-none">
           <MoreHorizontal className="h-4 w-4 cursor-pointer" />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-32 bg-white">
           <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full flex flex-row items-center justify-start gap-2"
-          >
-            <Eye className="mr-2 h-4 w-4" />
-            Lihat
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full flex flex-row items-center justify-start gap-2"
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full flex flex-row items-center justify-start gap-2"
-          >
-            <Trash className="mr-2 h-4 w-4" />
-            Hapus
-          </Button>
+          <ViewService data={row.original} />
+          <EditService data={row.original} />
+          <DeleteService id={row.original.id} />
         </DropdownMenuContent>
       </DropdownMenu>
     ),
