@@ -17,9 +17,19 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { TypeUser } from "@/types/user";
+import logout from "@/lib/action/logout";
 
-export function NavUser() {
+interface INavUser {
+  dataUser: TypeUser;
+}
+
+export function NavUser({ dataUser }: INavUser) {
   const { isMobile } = useSidebar();
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <SidebarMenu>
@@ -31,7 +41,9 @@ export function NavUser() {
               className="bg-slate-100 hover:bg-slate-200 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">Admin</span>
+                <span className="truncate font-semibold">
+                  {dataUser.username}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -45,17 +57,20 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal hover:bg-slate-100 cursor-pointer">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Admin</span>
+                  <span className="truncate font-semibold">
+                    {dataUser.username}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer hover:bg-slate-100">
-              <Link href={"/login"} className="flex items-center gap-2">
-                <LogOut />
-                Log out
-              </Link>
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer hover:bg-slate-100"
+            >
+              <LogOut />
+              Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

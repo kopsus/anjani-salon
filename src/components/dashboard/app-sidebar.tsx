@@ -10,8 +10,20 @@ import {
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import Image from "next/image";
+import { cookies } from "next/headers";
+import { decrypt } from "@/lib/action/session";
+import prisma from "@/lib/prisma";
 
 export async function AppSidebar() {
+  const cookie = (await cookies()).get("session")?.value;
+  const session = await decrypt(cookie);
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.id as string,
+    },
+  });
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -35,7 +47,7 @@ export async function AppSidebar() {
         <NavMain />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUser dataUser={user!} />
       </SidebarFooter>
     </Sidebar>
   );
