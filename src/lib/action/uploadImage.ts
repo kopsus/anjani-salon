@@ -22,7 +22,6 @@ export async function uploadImage(image: FormData) {
     return responServerAction({
       statusError: true,
       messageError: "Ukuran gambar terlalu besar, maksimal 1MB",
-      data: null,
     });
   }
 

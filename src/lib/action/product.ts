@@ -28,7 +28,7 @@ export const createProduct = async (data: ProductSchema, image?: FormData) => {
 
     if (image) {
       const result = await uploadImage(image);
-      if (result.error.status) {
+      if (result.error) {
         return responServerAction({
           statusError: true,
           messageError: result.error.message,

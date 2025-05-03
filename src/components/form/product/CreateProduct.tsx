@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   AlertDialog,
@@ -9,14 +7,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Edit, Upload } from "lucide-react";
-import { TypeService } from "@/types/service";
-import { useForm } from "react-hook-form";
-import { serviceSchema, ServiceSchema } from "@/lib/schemas/service";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { updateService } from "@/lib/action/service";
+import { productSchema, ProductSchema } from "@/lib/schemas/product";
+import { createProduct } from "@/lib/action/product";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -25,38 +21,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Upload } from "lucide-react";
 
-interface IEditService {
-  data: TypeService;
-}
-
-const EditService = ({ data }: IEditService) => {
+const CreateProduct = () => {
   const [open, setOpen] = React.useState(false);
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(
-    data.image ? `/uploads/${data.image}` : null
-  );
-  const [imageService, setImageService] = React.useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
+  const [imageProduct, setImageProduct] = React.useState<File | null>(null);
 
-  const form = useForm<ServiceSchema>({
-    resolver: zodResolver(serviceSchema),
+  const form = useForm<ProductSchema>({
+    resolver: zodResolver(productSchema),
     defaultValues: {
-      title: data.title,
-      image: data.image,
+      title: "",
+      image: "",
+      price: 0,
     },
   });
 
   const isSubmitting = form.formState.isSubmitting;
 
-  async function onSubmit(values: ServiceSchema) {
+  async function onSubmit(values: ProductSchema) {
     const formData = new FormData();
-    if (imageService) {
-      formData.append("image", imageService as File);
+    if (imageProduct) {
+      formData.append("image", imageProduct as File);
     }
 
-    const result = await updateService(data.id, values, formData);
-    if (result.success) {
+    const result = await createProduct(values, formData);
+    if (result.success.status) {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
@@ -68,20 +60,11 @@ const EditService = ({ data }: IEditService) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="w-full">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full flex flex-row items-center justify-start gap-2"
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-        </div>
+        <Button className="text-white">Tambah Produk</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Layanan</AlertDialogTitle>
+          <AlertDialogTitle>Edit Produk</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div className="mt-4">
               <Form {...form}>
@@ -93,7 +76,9 @@ const EditService = ({ data }: IEditService) => {
                     <div className="w-40 h-40 mx-auto rounded-xl border bg-white shadow-1 overflow-hidden">
                       {previewUrl ? (
                         <Image
-                          src={previewUrl ? previewUrl : `${previewUrl}`}
+                          src={
+                            previewUrl ? previewUrl : `/uploads/${previewUrl}`
+                          }
                           alt="Preview"
                           width={160}
                           height={160}
@@ -114,7 +99,7 @@ const EditService = ({ data }: IEditService) => {
                                 className="pl-12 w-full"
                                 onChange={(e) => {
                                   const file = e.target.files?.[0];
-                                  setImageService(file || null);
+                                  setImageProduct(file || null);
                                   if (file) {
                                     setPreviewUrl(URL.createObjectURL(file));
                                   }
@@ -134,10 +119,30 @@ const EditService = ({ data }: IEditService) => {
                       render={({ field }) => (
                         <FormItem className="lg:w-2/3 mx-auto">
                           <FormLabel className="text-gray-700">
-                            Nama Layanan
+                            Nama Produk
                           </FormLabel>
                           <FormControl>
-                            <Input placeholder="Nama Layanan" {...field} />
+                            <Input placeholder="Nama Produk" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="price"
+                      render={({ field }) => (
+                        <FormItem className="lg:w-2/3 mx-auto">
+                          <FormLabel className="text-gray-700">
+                            Harga Produk
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              placeholder="Harga Produk"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -174,4 +179,4 @@ const EditService = ({ data }: IEditService) => {
   );
 };
 
-export default EditService;
+export default CreateProduct;
