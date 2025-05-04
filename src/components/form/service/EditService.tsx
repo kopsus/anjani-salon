@@ -27,12 +27,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface IEditService {
   data: TypeService;
 }
 
 const EditService = ({ data }: IEditService) => {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(
     data.image ? `/uploads/${data.image}` : null
@@ -60,6 +62,7 @@ const EditService = ({ data }: IEditService) => {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
+      router.push("/services");
     } else if (result.error) {
       toast.error(result.error.message);
     }

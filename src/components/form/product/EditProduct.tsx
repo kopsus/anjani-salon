@@ -27,12 +27,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface IEditProduct {
   data: TypeProduct;
 }
 
 const EditProduct = ({ data }: IEditProduct) => {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(
     data.image ? `/uploads/${data.image}` : null
@@ -66,6 +68,7 @@ const EditProduct = ({ data }: IEditProduct) => {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
+      router.push("/products");
     } else if (result.error) {
       toast.error(result.error.message);
     }

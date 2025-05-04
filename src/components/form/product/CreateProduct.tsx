@@ -24,8 +24,10 @@ import {
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Upload } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const CreateProduct = () => {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const [imageProduct, setImageProduct] = React.useState<File | null>(null);
@@ -52,6 +54,7 @@ const CreateProduct = () => {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
+      router.push("/products");
     } else if (result.error) {
       toast.error(result.error.message);
     }
