@@ -47,7 +47,7 @@ const CreateService = () => {
     }
 
     const result = await createService(values, formData);
-    if (result.success) {
+    if (result.success.status) {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
@@ -63,7 +63,7 @@ const CreateService = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Layanan</AlertDialogTitle>
+          <AlertDialogTitle>Membuat Layanan</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div className="mt-4">
               <Form {...form}>

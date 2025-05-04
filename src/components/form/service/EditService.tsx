@@ -56,7 +56,7 @@ const EditService = ({ data }: IEditService) => {
     }
 
     const result = await updateService(data.id, values, formData);
-    if (result.success) {
+    if (result.success.status) {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
@@ -68,16 +68,14 @@ const EditService = ({ data }: IEditService) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="w-full">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full flex flex-row items-center justify-start gap-2"
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full flex flex-row items-center justify-start gap-2"
+        >
+          <Edit className="mr-2 h-4 w-4" />
+          Edit
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

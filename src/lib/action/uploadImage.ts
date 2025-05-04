@@ -13,7 +13,6 @@ export async function uploadImage(image: FormData) {
     return responServerAction({
       statusError: true,
       messageError: "Gagal mengupload gambar, file tidak valid",
-      data: null,
     });
   }
 

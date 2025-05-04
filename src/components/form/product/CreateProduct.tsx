@@ -64,7 +64,7 @@ const CreateProduct = () => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Edit Produk</AlertDialogTitle>
+          <AlertDialogTitle>Membuat Produk</AlertDialogTitle>
           <AlertDialogDescription asChild>
             <div className="mt-4">
               <Form {...form}>

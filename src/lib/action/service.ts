@@ -93,31 +93,33 @@ export const updateService = async (
       });
     }
 
-    let imagePath = oldService.image; // Default tetap pakai gambar lama
+    let imagePath = oldService.image;
 
-    // Jika ada image baru yang diunggah
     if (image) {
-      const result = await uploadImage(image);
-      if (result.error.status) {
-        return responServerAction({
-          statusError: true,
-          messageError: result.error.message,
-        });
-      }
-
-      // Hapus gambar lama jika ada
-      if (oldService.image) {
-        const oldImagePath = path.join(
-          process.cwd(),
-          "public/uploads",
-          oldService.image
-        );
-        if (fs.existsSync(oldImagePath)) {
-          fs.unlinkSync(oldImagePath);
+      const imageFile = image.get("image");
+      if (imageFile && imageFile instanceof File) {
+        const result = await uploadImage(image);
+        if (result.error.status) {
+          return responServerAction({
+            statusError: true,
+            messageError: result.error.message,
+          });
         }
-      }
 
-      imagePath = result.data; // Update dengan image baru
+        // Hapus gambar lama jika ada
+        if (oldService.image) {
+          const oldImagePath = path.join(
+            process.cwd(),
+            "public/uploads",
+            oldService.image
+          );
+          if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath);
+          }
+        }
+
+        imagePath = result.data;
+      }
     }
 
     await prisma.service.update({

@@ -56,8 +56,13 @@ const EditProduct = ({ data }: IEditProduct) => {
       formData.append("image", imageProduct as File);
     }
 
-    const result = await updateProduct(data.id, values, formData);
-    if (result.success) {
+    const result = await updateProduct(
+      data.id,
+      values,
+      imageProduct ? formData : undefined
+    );
+
+    if (result.success.status) {
       form.reset();
       toast.success(result.success.message);
       setOpen(false);
@@ -69,16 +74,14 @@ const EditProduct = ({ data }: IEditProduct) => {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="w-full">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full flex flex-row items-center justify-start gap-2"
-          >
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full flex flex-row items-center justify-start gap-2"
+        >
+          <Edit className="mr-2 h-4 w-4" />
+          Edit
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
