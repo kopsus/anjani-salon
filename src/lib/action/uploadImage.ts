@@ -39,8 +39,8 @@ export async function uploadImage(image: FormData) {
 
     // Menggunakan sharp untuk mengompres gambar sebelum menyimpan
     const compressedBuffer = await sharp(buffer)
-      .resize({ width: 800 }) // Resize agar lebih kecil (opsional)
-      .jpeg({ quality: 80 }) // Kurangi kualitas untuk menghemat ukuran
+      // .resize({ width: 800 }) // Resize agar lebih kecil (opsional)
+      // .jpeg({ quality: 80 }) // Kurangi kualitas untuk menghemat ukuran
       .toBuffer();
 
     await writeFile(uploadPath, compressedBuffer);
