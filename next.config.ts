@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "framerusercontent.com",
       },
+      {
+        hostname: "anjani-beauty-center.my.id",
+      },
     ],
   },
   experimental: {
