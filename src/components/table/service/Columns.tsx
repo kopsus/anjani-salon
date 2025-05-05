@@ -13,6 +13,7 @@ import { MoreHorizontal } from "lucide-react";
 import ViewService from "@/components/form/service/ViewService";
 import EditService from "@/components/form/service/EditService";
 import DeleteService from "@/components/form/service/DeleteService";
+import { baseURL } from "@/lib/utils";
 
 export const ColumnsService: ColumnDef<TypeService>[] = [
   {
@@ -23,7 +24,7 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
-      const image = `/uploads/${row.getValue("image")}`;
+      const image = `${baseURL}${row.getValue("image")}`;
       return (
         <div className="w-20 h-20 rounded overflow-hidden bg-white">
           <Image

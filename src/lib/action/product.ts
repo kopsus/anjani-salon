@@ -111,7 +111,7 @@ export const updateProduct = async (
         if (oldProduct.image) {
           const oldImagePath = path.join(
             process.cwd(),
-            "public/uploads",
+            "/var/www/uploads",
             oldProduct.image
           );
           if (fs.existsSync(oldImagePath)) {
@@ -165,11 +165,11 @@ export const deleteProduct = async (id: string) => {
       where: { id },
     });
 
-    // Hapus gambar dari folder `public/uploads` jika ada
+    // Hapus gambar dari folder `/var/www/uploads` jika ada
     if (product.image) {
       const imagePath = path.join(
         process.cwd(),
-        "public/uploads",
+        "/var/www/uploads",
         product.image
       );
       if (fs.existsSync(imagePath)) {

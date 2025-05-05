@@ -17,7 +17,6 @@ export const ColumnsProduct: ColumnDef<TypeProduct>[] = [
     header: "Image",
     cell: ({ row }) => {
       const image = `${baseURL}${row.getValue("image")}`;
-      console.log("image", image);
 
       return (
         <div className="w-20 h-20 rounded overflow-hidden bg-white">

@@ -110,7 +110,7 @@ export const updateService = async (
         if (oldService.image) {
           const oldImagePath = path.join(
             process.cwd(),
-            "public/uploads",
+            "/var/www/uploads",
             oldService.image
           );
           if (fs.existsSync(oldImagePath)) {
@@ -163,11 +163,11 @@ export const deleteService = async (id: string) => {
       where: { id },
     });
 
-    // Hapus gambar dari folder `public/uploads` jika ada
+    // Hapus gambar dari folder `/var/www/uploads` jika ada
     if (service.image) {
       const imagePath = path.join(
         process.cwd(),
-        "public/uploads",
+        "/var/www/uploads",
         service.image
       );
       if (fs.existsSync(imagePath)) {

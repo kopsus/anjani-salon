@@ -24,11 +24,8 @@ import {
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Upload } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { waitForImageWithPolling } from "@/lib/waitForImage";
 
 const CreateService = () => {
-  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const [imageService, setImageService] = React.useState<File | null>(null);
@@ -51,17 +48,7 @@ const CreateService = () => {
 
     const result = await createService(values, formData);
     if (result.success.status) {
-      const imageUrl = `/uploads/${
-        imageService?.name
-      }?t=${new Date().getTime()}`;
-      const isImageAvailable = await waitForImageWithPolling(imageUrl);
-
-      if (isImageAvailable) {
-        console.log("sucess");
-      } else {
-        toast.success(result.success.message);
-        window.location.reload();
-      }
+      toast.success(result.success.message);
       form.reset();
       setOpen(false);
     } else if (result.error) {
