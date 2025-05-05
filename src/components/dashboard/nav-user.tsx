@@ -16,19 +16,21 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
 import { TypeUser } from "@/types/user";
 import logout from "@/lib/action/logout";
+import { useRouter } from "next/navigation";
 
 interface INavUser {
   dataUser: TypeUser;
 }
 
 export function NavUser({ dataUser }: INavUser) {
+  const router = useRouter();
   const { isMobile } = useSidebar();
 
   const handleLogout = async () => {
     await logout();
+    router.push("/login");
   };
 
   return (
