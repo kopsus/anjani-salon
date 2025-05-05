@@ -27,7 +27,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { TableToolbar } from "./TableToolbar";
-import CreateProduct from "@/components/form/product/CreateProduct";
 import { storeDialogProduct } from "@/types/product";
 import { useSetAtom } from "jotai";
 
