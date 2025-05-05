@@ -43,6 +43,37 @@ const CreateProduct = () => {
 
   const isSubmitting = form.formState.isSubmitting;
 
+  async function waitForImageWithPolling(
+    imageUrl: string,
+    maxRetries = 10,
+    interval = 1000
+  ) {
+    return new Promise((resolve) => {
+      let attempts = 0;
+      const checkImage = async () => {
+        try {
+          const response = await fetch(imageUrl, {
+            method: "HEAD",
+            cache: "no-cache",
+          });
+          if (response.ok) {
+            resolve(true);
+            return;
+          }
+        } catch (error) {
+          console.log(`Menunggu gambar tersedia... percobaan ${attempts + 1}`);
+        }
+        attempts++;
+        if (attempts >= maxRetries) {
+          resolve(false);
+          return;
+        }
+        setTimeout(checkImage, interval);
+      };
+      checkImage();
+    });
+  }
+
   async function onSubmit(values: ProductSchema) {
     const formData = new FormData();
     if (imageProduct) {
@@ -51,10 +82,19 @@ const CreateProduct = () => {
 
     const result = await createProduct(values, formData);
     if (result.success.status) {
+      const imageUrl = `/uploads/${
+        imageProduct?.name
+      }?t=${new Date().getTime()}`;
+      const isImageAvailable = await waitForImageWithPolling(imageUrl);
+
+      if (isImageAvailable) {
+        console.log("sucess");
+      } else {
+        toast.success(result.success.message);
+        window.location.reload();
+      }
       form.reset();
-      toast.success(result.success.message);
       setOpen(false);
-      router.push("/products");
     } else if (result.error) {
       toast.error(result.error.message);
     }
