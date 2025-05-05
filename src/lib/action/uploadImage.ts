@@ -28,7 +28,8 @@ export async function uploadImage(image: FormData) {
     const bytes = await imageFile.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const uploadDir = join(process.cwd(), "public/uploads");
+    // const uploadDir = join(process.cwd(), "public/uploads");
+    const uploadDir = "/var/www/uploads";
     await mkdir(uploadDir, { recursive: true });
 
     // Ekstensi file (misalnya .jpg, .png)
