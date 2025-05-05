@@ -4,17 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { TypeProduct } from "@/types/product";
 import { formatIDR } from "@/lib/format";
 import Image from "next/image";
-import { MoreHorizontal, Trash } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import ViewProduct from "@/components/form/product/ViewProduct";
-import EditProduct from "@/components/form/product/EditProduct";
-import DeleteProduct from "@/components/form/product/DeleteProduct";
+import { TableAction } from "./TableActions";
 
 export const ColumnsProduct: ColumnDef<TypeProduct>[] = [
   {
@@ -50,18 +40,9 @@ export const ColumnsProduct: ColumnDef<TypeProduct>[] = [
     enablePinning: true,
     accessorKey: "Aksi",
     header: "Aksi",
-    cell: ({ row }) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger className="w-full flex justify-end">
-          <MoreHorizontal className="h-4 w-4 cursor-pointer" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32 bg-white">
-          <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-          <ViewProduct data={row.original} />
-          <EditProduct data={row.original} />
-          <DeleteProduct id={row.original.id} />
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    cell: ({ row }: { row: { original: TypeProduct } }) => {
+      const item = row.original;
+      return <TableAction item={item} />;
+    },
   },
 ];

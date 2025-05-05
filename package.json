@@ -24,6 +24,7 @@
     "clsx": "^2.1.1",
     "hamburger-react": "^2.5.2",
     "jose": "^6.0.10",
+    "jotai": "^2.12.3",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.503.0",
