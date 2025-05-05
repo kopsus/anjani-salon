@@ -42,6 +42,7 @@ export const createProduct = async (data: ProductSchema, image?: FormData) => {
         title: data.title,
         price: data.price,
         image: imagePath,
+        description: data.description,
       },
     });
 
@@ -129,6 +130,7 @@ export const updateProduct = async (
         title: data.title,
         price: data.price,
         image: imagePath,
+        description: data.description,
       },
     });
 

@@ -41,6 +41,7 @@ export const createService = async (data: ServiceSchema, image?: FormData) => {
       data: {
         title: data.title,
         image: imagePath,
+        description: data.description,
       },
     });
 
@@ -127,6 +128,7 @@ export const updateService = async (
       data: {
         title: data.title,
         image: imagePath,
+        description: data.description,
       },
     });
 

@@ -6,6 +6,7 @@ import { TypeProduct } from "@/types/product";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { formatIDR } from "@/lib/format";
+import { baseURL } from "@/lib/utils";
 
 const CardProduct = ({ item }: { item: TypeProduct }) => {
   const handleOrderClick = () => {
@@ -24,11 +25,11 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
   return (
     <Card
       key={item.id}
-      className="w-full flex flex-col gap-4 p-4 border-slate-200 rounded-2xl"
+      className="w-full h-full flex flex-col justify-between gap-4 p-4 border-slate-200 rounded-2xl"
     >
       <div className="bg-slate-200 w-full h-48 rounded-2xl overflow-hidden">
         <Image
-          src={`/uploads/${item.image}`}
+          src={`${baseURL}${item.image}`}
           alt={item.title}
           width={0}
           height={0}
@@ -37,7 +38,8 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-lg font-semibold">{item.title}</p>
-        <p className="font-bold">{formatIDR(item.price)}</p>
+        <p>{item.description}</p>
+        <p className="font-bold text-end">{formatIDR(item.price)}</p>
       </div>
 
       <Button

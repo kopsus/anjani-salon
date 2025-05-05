@@ -14,14 +14,16 @@ model User {
 }
 
 model Produk {
-    id      String  @id @default(cuid())
-    image   String
-    title   String  @unique
-    price   Int
+    id          String  @id @default(cuid())
+    image       String
+    title       String  @unique
+    price       Int
+    description String @default("")
 }
 
 model Service {
-    id      String  @id @default(cuid())
-    image   String
-    title   String  @unique
+    id          String  @id @default(cuid())
+    image       String
+    title       String  @unique
+    description String @default("")
 }

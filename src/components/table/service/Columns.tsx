@@ -39,6 +39,13 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     },
   },
   {
+    accessorKey: "description",
+    header: "Deskripsi",
+    cell: ({ row }) => {
+      return <p className="line-clamp-3">{row.getValue("description")}</p>;
+    },
+  },
+  {
     enablePinning: true,
     accessorKey: "Aksi",
     header: "Aksi",

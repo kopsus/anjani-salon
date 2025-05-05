@@ -35,6 +35,7 @@ const CreateService = () => {
     defaultValues: {
       title: "",
       image: "",
+      description: "",
     },
   });
 
@@ -69,7 +70,7 @@ const CreateService = () => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-6"
+                  className="flex flex-col gap-6 lg:max-w-5/6 mx-auto"
                 >
                   <div className="space-y-4 text-left">
                     <div className="w-40 h-40 mx-auto rounded-xl border bg-white shadow-1 overflow-hidden">
@@ -89,7 +90,7 @@ const CreateService = () => {
                       render={() => (
                         <FormItem>
                           <FormControl>
-                            <div className="relative w-full lg:w-2/3 mx-auto">
+                            <div className="relative w-full mx-auto">
                               <Input
                                 type="file"
                                 accept="image/*"
@@ -114,12 +115,32 @@ const CreateService = () => {
                       control={form.control}
                       name="title"
                       render={({ field }) => (
-                        <FormItem className="lg:w-2/3 mx-auto">
+                        <FormItem className="mx-auto">
                           <FormLabel className="text-gray-700">
                             Nama Layanan
                           </FormLabel>
                           <FormControl>
                             <Input placeholder="Nama Layanan" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem className="mx-auto">
+                          <FormLabel className="text-gray-700">
+                            Nama Layanan
+                          </FormLabel>
+                          <FormControl>
+                            <textarea
+                              placeholder="Deskripsi Layanan"
+                              className="px-4 py-2 outline-primary border border-primary rounded"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

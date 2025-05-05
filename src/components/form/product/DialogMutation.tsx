@@ -37,6 +37,7 @@ const DialogMutation = () => {
       title: "",
       price: 0,
       image: undefined,
+      description: "",
     });
   };
 
@@ -46,6 +47,7 @@ const DialogMutation = () => {
       title: "",
       price: 0,
       image: undefined,
+      description: "",
     },
   });
 
@@ -57,6 +59,7 @@ const DialogMutation = () => {
         title: dialog.data.title,
         price: dialog.data.price,
         image: dialog.data.image,
+        description: dialog.data.description,
       });
     }
   }, [dialog.type, dialog.data, form]);
@@ -92,7 +95,7 @@ const DialogMutation = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 lg:max-w-5/6 mx-auto"
+          className="flex flex-col gap-6 mx-auto"
         >
           <div className="space-y-4 text-left">
             <div className="w-40 h-40 mx-auto rounded-xl border bg-white shadow-1 overflow-hidden">
@@ -157,6 +160,24 @@ const DialogMutation = () => {
                     <Input
                       type="number"
                       placeholder="Harga Produk"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="mx-auto">
+                  <FormLabel className="text-gray-700">Nama Produk</FormLabel>
+                  <FormControl>
+                    <textarea
+                      className="px-4 py-2 outline-primary border border-primary rounded"
+                      placeholder="Deskripsi Produk"
                       {...field}
                     />
                   </FormControl>
