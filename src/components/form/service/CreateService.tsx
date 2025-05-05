@@ -25,12 +25,13 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { waitForImageWithPolling } from "@/lib/waitForImage";
 
 const CreateService = () => {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
-  const [imageProduct, setImageProduct] = React.useState<File | null>(null);
+  const [imageService, setImageService] = React.useState<File | null>(null);
 
   const form = useForm<ServiceSchema>({
     resolver: zodResolver(serviceSchema),
@@ -44,16 +45,25 @@ const CreateService = () => {
 
   async function onSubmit(values: ServiceSchema) {
     const formData = new FormData();
-    if (imageProduct) {
-      formData.append("image", imageProduct as File);
+    if (imageService) {
+      formData.append("image", imageService as File);
     }
 
     const result = await createService(values, formData);
     if (result.success.status) {
+      const imageUrl = `/uploads/${
+        imageService?.name
+      }?t=${new Date().getTime()}`;
+      const isImageAvailable = await waitForImageWithPolling(imageUrl);
+
+      if (isImageAvailable) {
+        console.log("sucess");
+      } else {
+        toast.success(result.success.message);
+        window.location.reload();
+      }
       form.reset();
-      toast.success(result.success.message);
       setOpen(false);
-      router.push("/services");
     } else if (result.error) {
       toast.error(result.error.message);
     }
@@ -99,7 +109,7 @@ const CreateService = () => {
                                 className="pl-12 w-full"
                                 onChange={(e) => {
                                   const file = e.target.files?.[0];
-                                  setImageProduct(file || null);
+                                  setImageService(file || null);
                                   if (file) {
                                     setPreviewUrl(URL.createObjectURL(file));
                                   }

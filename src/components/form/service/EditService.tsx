@@ -28,6 +28,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { waitForImageWithPolling } from "@/lib/waitForImage";
 
 interface IEditService {
   data: TypeService;
@@ -59,10 +60,19 @@ const EditService = ({ data }: IEditService) => {
 
     const result = await updateService(data.id, values, formData);
     if (result.success.status) {
+      const imageUrl = `/uploads/${
+        imageService?.name
+      }?t=${new Date().getTime()}`;
+      const isImageAvailable = await waitForImageWithPolling(imageUrl);
+
+      if (isImageAvailable) {
+        console.log("sucess");
+      } else {
+        toast.success(result.success.message);
+        window.location.reload();
+      }
       form.reset();
-      toast.success(result.success.message);
       setOpen(false);
-      router.push("/services");
     } else if (result.error) {
       toast.error(result.error.message);
     }
