@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import ViewService from "@/components/form/service/ViewService";
 import EditService from "@/components/form/service/EditService";
 import DeleteService from "@/components/form/service/DeleteService";
 import { baseURL } from "@/lib/utils";
@@ -56,7 +55,6 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-32 bg-white">
           <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-          <ViewService data={row.original} />
           <EditService data={row.original} />
           <DeleteService id={row.original.id} />
         </DropdownMenuContent>
