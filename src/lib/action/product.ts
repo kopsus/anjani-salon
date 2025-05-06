@@ -1,12 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { ProductSchema } from "../schemas/product";
 import prisma from "../prisma";
 import { responServerAction } from "./responseServerAction";
 import { uploadImage } from "./uploadImage";
 import path from "path";
 import fs from "fs";
+import { revalidateProduct } from "../reavalidate";
 
 export const createProduct = async (data: ProductSchema, image?: FormData) => {
   try {
@@ -46,8 +46,7 @@ export const createProduct = async (data: ProductSchema, image?: FormData) => {
       },
     });
 
-    revalidatePath("/products");
-    revalidatePath("/product");
+    revalidateProduct();
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil membuat product",
@@ -135,8 +134,7 @@ export const updateProduct = async (
       },
     });
 
-    revalidatePath("/products");
-    revalidatePath("/product");
+    revalidateProduct();
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil mengubah data produk",
@@ -181,8 +179,7 @@ export const deleteProduct = async (id: string) => {
       }
     }
 
-    revalidatePath("/products");
-    revalidatePath("/product");
+    revalidateProduct();
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil menghapus produk",

@@ -1,12 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import { ServiceSchema } from "../schemas/service";
 import prisma from "../prisma";
 import { responServerAction } from "./responseServerAction";
 import { uploadImage } from "./uploadImage";
 import path from "path";
 import fs from "fs";
+import { revalidateService } from "../reavalidate";
 
 export const createService = async (data: ServiceSchema, image?: FormData) => {
   try {
@@ -45,8 +45,7 @@ export const createService = async (data: ServiceSchema, image?: FormData) => {
       },
     });
 
-    revalidatePath("/services");
-    revalidatePath("/service");
+    revalidateService();
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil membuat layanan",
@@ -133,8 +132,7 @@ export const updateService = async (
       },
     });
 
-    revalidatePath("/services");
-    revalidatePath("/service");
+    revalidateService();
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil mengubah data layanan",
@@ -179,8 +177,7 @@ export const deleteService = async (id: string) => {
       }
     }
 
-    revalidatePath("/services");
-    revalidatePath("/service");
+    revalidateService();
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil menghapus layanan",
