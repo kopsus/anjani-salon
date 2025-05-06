@@ -46,6 +46,7 @@ export const createService = async (data: ServiceSchema, image?: FormData) => {
     });
 
     revalidatePath("/services");
+    revalidatePath("/service");
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil membuat layanan",
@@ -133,6 +134,7 @@ export const updateService = async (
     });
 
     revalidatePath("/services");
+    revalidatePath("/service");
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil mengubah data layanan",
@@ -178,6 +180,7 @@ export const deleteService = async (id: string) => {
     }
 
     revalidatePath("/services");
+    revalidatePath("/service");
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil menghapus layanan",

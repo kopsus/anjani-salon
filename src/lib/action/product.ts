@@ -47,6 +47,7 @@ export const createProduct = async (data: ProductSchema, image?: FormData) => {
     });
 
     revalidatePath("/products");
+    revalidatePath("/product");
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil membuat product",
@@ -135,6 +136,7 @@ export const updateProduct = async (
     });
 
     revalidatePath("/products");
+    revalidatePath("/product");
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil mengubah data produk",
@@ -180,6 +182,7 @@ export const deleteProduct = async (id: string) => {
     }
 
     revalidatePath("/products");
+    revalidatePath("/product");
     return responServerAction({
       statusSuccess: true,
       messageSuccess: "Berhasil menghapus produk",
