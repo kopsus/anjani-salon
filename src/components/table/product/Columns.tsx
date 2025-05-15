@@ -42,7 +42,9 @@ export const ColumnsProduct: ColumnDef<TypeProduct>[] = [
     accessorKey: "description",
     header: "Deskripsi",
     cell: ({ row }) => {
-      return <p className="line-clamp-3">{row.getValue("description")}</p>;
+      return (
+        <p className="text-wrap line-clamp-3">{row.getValue("description")}</p>
+      );
     },
   },
   {
