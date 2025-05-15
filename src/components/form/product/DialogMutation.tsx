@@ -173,7 +173,9 @@ const DialogMutation = () => {
               name="description"
               render={({ field }) => (
                 <FormItem className="mx-auto">
-                  <FormLabel className="text-gray-700">Nama Produk</FormLabel>
+                  <FormLabel className="text-gray-700">
+                    Deskripsi Produk
+                  </FormLabel>
                   <FormControl>
                     <textarea
                       className="px-4 py-2 outline-primary border border-primary rounded"

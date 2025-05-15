@@ -133,7 +133,7 @@ const CreateService = () => {
                       render={({ field }) => (
                         <FormItem className="mx-auto">
                           <FormLabel className="text-gray-700">
-                            Nama Layanan
+                            Deskripsi Layanan
                           </FormLabel>
                           <FormControl>
                             <textarea

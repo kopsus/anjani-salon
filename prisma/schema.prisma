@@ -18,12 +18,12 @@ model Produk {
     image       String
     title       String  @unique
     price       Int
-    description String @default("")
+    description String   @db.Text
 }
 
 model Service {
     id          String  @id @default(cuid())
     image       String
     title       String  @unique
-    description String @default("")
+    description String   @db.Text
 }
