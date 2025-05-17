@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Button from "../Button";
 import Image from "next/image";
@@ -6,6 +8,11 @@ import { baseURL } from "@/lib/utils";
 
 const CardService = ({ item }: { item: TypeService }) => {
   const message = `Halo, saya ingin booking untuk layanan: ${item.title}.`;
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  const handleToggleDescription = () => {
+    setIsExpanded((prev) => !prev);
+  };
 
   return (
     <div
@@ -13,11 +20,9 @@ const CardService = ({ item }: { item: TypeService }) => {
       className="h-full w-full rounded-[20px] p-8 flex flex-col items-start gap-6 bg-slate-100"
     >
       <div className="flex flex-col gap-6">
-        <div className="break-words text-wrap">
-          <p className="flex items-center text-lg lg:text-xl font-bold text-[#464646]">
-            {item.title}
-          </p>
-        </div>
+        <p className="flex items-center text-lg h-8 lg:text-xl font-bold text-[#464646]">
+          {item.title}
+        </p>
         <div className="rounded-2xl overflow-hidden h-[212px] w-full">
           <Image
             src={`${baseURL}${item.image}`}
@@ -27,7 +32,20 @@ const CardService = ({ item }: { item: TypeService }) => {
             sizes="100vw"
           />
         </div>
-        <p className="">{item.description}</p>
+        <div>
+          <p className={`${isExpanded ? "" : "line-clamp-3"}`}>
+            {item.description}
+          </p>
+
+          {item.description?.length! > 100 && (
+            <button
+              onClick={handleToggleDescription}
+              className="text-blue-500 font-medium cursor-pointer"
+            >
+              {isExpanded ? "Tampilkan lebih sedikit" : "Lihat selengkapnya"}
+            </button>
+          )}
+        </div>
       </div>
       <Button
         href={`https://wa.me/+6287724002299?text=${encodeURIComponent(
