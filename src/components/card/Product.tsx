@@ -31,7 +31,7 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
   return (
     <Card
       key={item.id}
-      className="w-full h-full flex flex-col gap-4 p-4 border-slate-200 rounded-2xl"
+      className="w-full h-max flex flex-col gap-4 p-4 border-slate-200 rounded-2xl"
     >
       <div className="bg-slate-200 w-full h-48 rounded-2xl overflow-hidden">
         <Image

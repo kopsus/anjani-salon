@@ -17,7 +17,7 @@ const CardService = ({ item }: { item: TypeService }) => {
   return (
     <div
       key={item.id}
-      className="h-full w-full rounded-[20px] p-8 flex flex-col items-start gap-6 bg-slate-100"
+      className="h-max w-full rounded-[20px] p-8 flex flex-col items-start gap-6 bg-slate-100"
     >
       <div className="flex flex-col gap-6">
         <p className="flex items-center text-lg h-8 lg:text-xl font-bold text-[#464646]">
