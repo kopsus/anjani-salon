@@ -2,7 +2,6 @@
 
 import DialogLayout from "@/components/dialog/DialogLayout";
 import { Button } from "@/components/ui/button";
-import { deleteProduct } from "@/lib/action/product";
 import supabase from "@/lib/supabase/init";
 import { useProductStore } from "@/store/productStore";
 import { storeDialogProduct } from "@/types/product";
