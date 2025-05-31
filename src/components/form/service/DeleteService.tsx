@@ -12,17 +12,28 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
-import { deleteService } from "@/lib/action/service";
 import { toast } from "react-toastify";
+import supabase from "@/lib/supabase/init";
+import { useServiceStore } from "@/store/serviceStore";
+import { deleteImageFromSupabase } from "@/utils/deleteImageFromSupabase";
 
-const DeleteService = ({ id }: { id: string }) => {
+interface IDeleteService {
+  image: string;
+  id: string;
+}
+
+const DeleteService = ({ id, image }: IDeleteService) => {
+  const { fetchServices } = useServiceStore();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await deleteService(id);
-    if (result.success) {
-      toast.success(result.success.message);
-    } else {
-      toast.error(result.error?.message);
+
+    const { error } = await supabase.from("services").delete().eq("id", id);
+    if (error) toast.error("Gagal menghapus layanan");
+    else {
+      await deleteImageFromSupabase(image);
+      await fetchServices();
+      toast.success("Berhasil menghapus layanan");
     }
   };
 

@@ -6,7 +6,7 @@ import { TypeProduct } from "@/types/product";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { formatIDR } from "@/lib/format";
-import { baseURL } from "@/lib/utils";
+import { baseIMGURL } from "@/lib/utils";
 
 const CardProduct = ({ item }: { item: TypeProduct }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -35,7 +35,7 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
     >
       <div className="bg-slate-200 w-full h-48 rounded-2xl overflow-hidden">
         <Image
-          src={`${baseURL}${item.image}`}
+          src={`${baseIMGURL}${item.image}`}
           alt={item.title}
           width={0}
           height={0}

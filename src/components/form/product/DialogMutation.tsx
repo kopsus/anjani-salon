@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { createProduct, updateProduct } from "@/lib/action/product";
 import { productSchema, ProductSchema } from "@/lib/schemas/product";
-import { baseURL } from "@/lib/utils";
+import { baseIMGURL } from "@/lib/utils";
 import { storeDialogProduct } from "@/types/product";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAtom } from "jotai";
@@ -54,7 +54,7 @@ const DialogMutation = () => {
   React.useEffect(() => {
     if (dialog.type === "UPDATE" && dialog.data) {
       const imageUrl = dialog.data.image;
-      setPreviewUrl(imageUrl ? `${baseURL}${imageUrl}` : null);
+      setPreviewUrl(imageUrl ? `${baseIMGURL}${imageUrl}` : null);
       form.reset({
         title: dialog.data.title,
         price: dialog.data.price,
@@ -101,7 +101,7 @@ const DialogMutation = () => {
             <div className="w-40 h-40 mx-auto rounded-xl border bg-white shadow-1 overflow-hidden">
               {previewUrl ? (
                 <Image
-                  src={previewUrl ? previewUrl : `${baseURL}${previewUrl}`}
+                  src={previewUrl ? previewUrl : `${baseIMGURL}${previewUrl}`}
                   alt="Preview"
                   width={160}
                   height={160}

@@ -1,9 +1,23 @@
-import React from "react";
-import CardProduct from "./card/Product";
-import prisma from "@/lib/prisma";
+"use client";
 
-const Products = async () => {
-  const products = await prisma.produk.findMany();
+import React, { useEffect, useState } from "react";
+import CardProduct from "./card/Product";
+import { TypeProduct } from "@/types/product";
+import supabase from "@/lib/supabase/init";
+
+const Products = () => {
+  const [products, setProducts] = useState<TypeProduct[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from("products").select("*");
+
+      if (error) console.log("error : ", error);
+      else setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <div className="Container">
@@ -14,7 +28,7 @@ const Products = async () => {
         </p>
       </div>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {products.slice(0, 4).map((item) => (
+        {products.slice(0, 4).map((item: TypeProduct) => (
           <CardProduct key={item.id} item={item} />
         ))}
       </div>

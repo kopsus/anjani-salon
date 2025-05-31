@@ -7,14 +7,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { serviceSchema, ServiceSchema } from "@/lib/schemas/service";
-import { createService } from "@/lib/action/service";
 import { toast } from "react-toastify";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -23,153 +18,130 @@ import {
 } from "@/components/ui/form";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { Upload } from "lucide-react";
+import supabase from "@/lib/supabase/init";
+import { useForm, FormProvider } from "react-hook-form";
+import { useImageUpload } from "@/hooks/useImageUpload";
+import { useServiceStore } from "@/store/serviceStore";
 
 const CreateService = () => {
+  const { fetchServices } = useServiceStore();
+  const { previewUrl, handleFileSelect, uploadToSupabase, resetImage } =
+    useImageUpload();
   const [open, setOpen] = React.useState(false);
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
-  const [imageService, setImageService] = React.useState<File | null>(null);
 
-  const form = useForm<ServiceSchema>({
-    resolver: zodResolver(serviceSchema),
-    defaultValues: {
-      title: "",
-      image: "",
-      description: "",
-    },
+  const form = useForm({
+    defaultValues: { image: "", title: "", description: "" },
   });
+  const { handleSubmit, reset } = form;
 
-  const isSubmitting = form.formState.isSubmitting;
+  const onSubmit = async (data: any) => {
+    const imageUrl = await uploadToSupabase("anjani");
+    if (!imageUrl) return;
 
-  async function onSubmit(values: ServiceSchema) {
-    const formData = new FormData();
-    if (imageService) {
-      formData.append("image", imageService as File);
-    }
+    const payload = { ...data, image: imageUrl };
 
-    const result = await createService(values, formData);
-    if (result.success.status) {
-      toast.success(result.success.message);
-      form.reset();
+    const { error } = await supabase.from("services").insert([payload]);
+    if (error) {
+      toast.error("Gagal menambahkan layanan");
+    } else {
+      reset();
+      resetImage();
       setOpen(false);
-    } else if (result.error) {
-      toast.error(result.error.message);
+      toast.success("Berhasil menambahkan service");
+      await fetchServices();
     }
-  }
+  };
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button className="text-white">Tambah Layanan</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="h-[95vh] overflow-y-auto">
         <AlertDialogHeader>
           <AlertDialogTitle>Membuat Layanan</AlertDialogTitle>
           <AlertDialogDescription asChild>
-            <div className="mt-4">
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="flex flex-col gap-6 lg:max-w-5/6 mx-auto"
-                >
-                  <div className="space-y-4 text-left">
-                    <div className="w-40 h-40 mx-auto rounded-xl border bg-white shadow-1 overflow-hidden">
-                      {previewUrl ? (
-                        <Image
-                          src={previewUrl ? previewUrl : `${previewUrl}`}
-                          alt="Preview"
-                          width={160}
-                          height={160}
-                        />
-                      ) : null}
-                    </div>
+            <FormProvider {...form}>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col justify-between h-full gap-6 w-full mx-auto"
+              >
+                <div className="space-y-4 text-left">
+                  <FormItem className="mx-auto">
+                    {previewUrl && (
+                      <Image
+                        src={previewUrl}
+                        alt="Preview"
+                        className="mt-2 w-48 h-48 object-cover rounded mx-auto"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                      />
+                    )}
+                    <FormLabel className="text-gray-700">
+                      Pilih Gambar
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                        name="image"
+                      />
+                    </FormControl>
+                  </FormItem>
 
-                    <FormField
-                      control={form.control}
-                      name="image"
-                      render={() => (
-                        <FormItem>
-                          <FormControl>
-                            <div className="relative w-full mx-auto">
-                              <Input
-                                type="file"
-                                accept="image/*"
-                                className="pl-12 w-full"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  setImageService(file || null);
-                                  if (file) {
-                                    setPreviewUrl(URL.createObjectURL(file));
-                                  }
-                                }}
-                              />
-                              <Upload className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500" />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <FormField
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem className="mx-auto">
+                        <FormLabel className="text-gray-700">
+                          Nama Layanan
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="Nama Layanan" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                    <FormField
-                      control={form.control}
-                      name="title"
-                      render={({ field }) => (
-                        <FormItem className="mx-auto">
-                          <FormLabel className="text-gray-700">
-                            Nama Layanan
-                          </FormLabel>
-                          <FormControl>
-                            <Input placeholder="Nama Layanan" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <FormField
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem className="mx-auto">
+                        <FormLabel className="text-gray-700">
+                          Deskripsi Layanan
+                        </FormLabel>
+                        <FormControl>
+                          <textarea
+                            placeholder="Deskripsi Layanan"
+                            className="px-4 py-2 outline-primary border border-primary rounded h-32"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
 
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem className="mx-auto">
-                          <FormLabel className="text-gray-700">
-                            Deskripsi Layanan
-                          </FormLabel>
-                          <FormControl>
-                            <textarea
-                              placeholder="Deskripsi Layanan"
-                              className="px-4 py-2 outline-primary border border-primary rounded"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="flex justify-end gap-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        form.reset();
-                        setOpen(false);
-                      }}
-                    >
-                      Batal
-                    </Button>
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6"
-                    >
-                      {isSubmitting ? "Menyimpan..." : "Simpan"}
-                    </Button>
-                  </div>
-                </form>
-              </Form>
-            </div>
+                <div className="flex justify-end gap-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    Batal
+                  </Button>
+                  <Button type="submit" className="text-white">
+                    Simpan
+                  </Button>
+                </div>
+              </form>
+            </FormProvider>
           </AlertDialogDescription>
         </AlertDialogHeader>
       </AlertDialogContent>

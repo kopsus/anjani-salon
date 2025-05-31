@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "anjani-beauty-center.my.id",
       },
+      {
+        hostname: "gliqpwvogkqnlrwksymz.supabase.co",
+      },
     ],
   },
   experimental: {

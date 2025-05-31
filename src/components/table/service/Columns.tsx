@@ -12,7 +12,6 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import EditService from "@/components/form/service/EditService";
 import DeleteService from "@/components/form/service/DeleteService";
-import { baseURL } from "@/lib/utils";
 
 export const ColumnsService: ColumnDef<TypeService>[] = [
   {
@@ -23,7 +22,8 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
-      const image = `${baseURL}${row.getValue("image")}`;
+      const image = `${row.getValue("image")}`;
+
       return (
         <div className="w-20 h-20 rounded overflow-hidden bg-white">
           <Image
@@ -58,7 +58,7 @@ export const ColumnsService: ColumnDef<TypeService>[] = [
         <DropdownMenuContent align="end" className="w-32 bg-white">
           <DropdownMenuLabel>Aksi</DropdownMenuLabel>
           <EditService data={row.original} />
-          <DeleteService id={row.original.id} />
+          <DeleteService id={row.original.id} image={row.original.image} />
         </DropdownMenuContent>
       </DropdownMenu>
     ),

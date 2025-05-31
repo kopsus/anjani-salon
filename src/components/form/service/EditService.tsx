@@ -13,9 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Edit, Upload } from "lucide-react";
 import { TypeService } from "@/types/service";
 import { useForm } from "react-hook-form";
-import { serviceSchema, ServiceSchema } from "@/lib/schemas/service";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { updateService } from "@/lib/action/service";
 import { toast } from "react-toastify";
 import {
   Form,
@@ -27,45 +24,93 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { baseURL } from "@/lib/utils";
+import { useImageUpload } from "@/hooks/useImageUpload";
+import supabase from "@/lib/supabase/init";
+import { useServiceStore } from "@/store/serviceStore";
+import { deleteImageFromSupabase } from "@/utils/deleteImageFromSupabase";
 
 interface IEditService {
   data: TypeService;
 }
 
 const EditService = ({ data }: IEditService) => {
+  const {
+    previewUrl,
+    selectedFile, // ← tambahkan ini
+    setPreviewUrl,
+    handleFileSelect,
+    uploadToSupabase,
+    resetImage,
+  } = useImageUpload();
+  const { fetchServices } = useServiceStore();
   const [open, setOpen] = React.useState(false);
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(
-    data.image ? `${baseURL}${data.image}` : null
-  );
-  const [imageService, setImageService] = React.useState<File | null>(null);
+  const [loading, setLoading] = React.useState(false);
 
-  const form = useForm<ServiceSchema>({
-    resolver: zodResolver(serviceSchema),
+  const form = useForm({
     defaultValues: {
-      title: data.title,
-      image: data.image,
-      description: data.description,
+      image: data.image || "",
+      title: data.title || "",
+      description: data.description || "",
     },
   });
 
-  const isSubmitting = form.formState.isSubmitting;
+  const { handleSubmit, reset } = form;
 
-  async function onSubmit(values: ServiceSchema) {
-    const formData = new FormData();
-    if (imageService) {
-      formData.append("image", imageService as File);
-    }
+  React.useEffect(() => {
+    if (open) {
+      reset({
+        image: data.image || "",
+        title: data.title || "",
+        description: data.description || "",
+      });
 
-    const result = await updateService(data.id, values, formData);
-    if (result.success.status) {
-      toast.success(result.success.message);
-      form.reset();
-      setOpen(false);
-    } else if (result.error) {
-      toast.error(result.error.message);
+      if (data.image) {
+        setPreviewUrl(data.image);
+      }
     }
-  }
+  }, [data.description, data.image, data.title, open, reset, setPreviewUrl]);
+
+  const onSubmit = async (formData: any) => {
+    setLoading(true);
+    let imageUrl = data.image;
+
+    try {
+      if (selectedFile) {
+        if (data.image) {
+          await deleteImageFromSupabase(data.image);
+        }
+
+        const uploadedUrl = await uploadToSupabase("anjani");
+        if (!uploadedUrl) return;
+        imageUrl = uploadedUrl;
+      }
+
+      const payload = {
+        ...formData,
+        image: imageUrl,
+      };
+
+      const { error } = await supabase
+        .from("services")
+        .update(payload)
+        .eq("id", data.id);
+
+      if (error) {
+        toast.error("Gagal mengupdate layanan");
+      } else {
+        await fetchServices();
+        reset();
+        resetImage();
+        toast.success("Berhasil mengupdate layanan");
+        setOpen(false); // Tutup dialog hanya jika berhasil
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Terjadi kesalahan saat update");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -86,7 +131,7 @@ const EditService = ({ data }: IEditService) => {
             <div className="mt-4">
               <Form {...form}>
                 <form
-                  onSubmit={form.handleSubmit(onSubmit)}
+                  onSubmit={handleSubmit(onSubmit)}
                   className="flex flex-col gap-6 lg:max-w-5/6 mx-auto"
                 >
                   <div className="space-y-4 text-left">
@@ -112,13 +157,7 @@ const EditService = ({ data }: IEditService) => {
                                 type="file"
                                 accept="image/*"
                                 className="pl-12 w-full"
-                                onChange={(e) => {
-                                  const file = e.target.files?.[0];
-                                  setImageService(file || null);
-                                  if (file) {
-                                    setPreviewUrl(URL.createObjectURL(file));
-                                  }
-                                }}
+                                onChange={handleFileSelect}
                               />
                               <Upload className="absolute left-3 top-1/2 -translate-y-1/2 text-blue-500" />
                             </div>
@@ -177,11 +216,11 @@ const EditService = ({ data }: IEditService) => {
                       Batal
                     </Button>
                     <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6"
+                      onClick={handleSubmit(onSubmit)}
+                      disabled={loading}
+                      className="text-white"
                     >
-                      {isSubmitting ? "Menyimpan..." : "Simpan"}
+                      {loading ? "Loading..." : "Simpan"}
                     </Button>
                   </div>
                 </form>

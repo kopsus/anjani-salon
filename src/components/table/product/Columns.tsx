@@ -5,7 +5,7 @@ import { TypeProduct } from "@/types/product";
 import { formatIDR } from "@/lib/format";
 import Image from "next/image";
 import { TableAction } from "./TableActions";
-import { baseURL } from "@/lib/utils";
+import { baseIMGURL } from "@/lib/utils";
 
 export const ColumnsProduct: ColumnDef<TypeProduct>[] = [
   {
@@ -16,7 +16,7 @@ export const ColumnsProduct: ColumnDef<TypeProduct>[] = [
     accessorKey: "image",
     header: "Image",
     cell: ({ row }) => {
-      const image = `${baseURL}${row.getValue("image")}`;
+      const image = `${baseIMGURL}${row.getValue("image")}`;
 
       return (
         <div className="w-20 h-20 rounded overflow-hidden bg-white">

@@ -1,11 +1,17 @@
+"use client";
+
 import PageHeader from "@/components/dashboard/page-header";
 import { ColumnsService } from "@/components/table/service/Columns";
 import { DataTable } from "@/components/table/service/DataTable";
-import prisma from "@/lib/prisma";
-import React from "react";
+import { useServiceStore } from "@/store/serviceStore";
+import { useEffect } from "react";
 
-const page = async () => {
-  const services = await prisma.service.findMany();
+const Services = () => {
+  const { services, fetchServices } = useServiceStore();
+
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
 
   return (
     <>
@@ -15,4 +21,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default Services;
