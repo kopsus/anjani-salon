@@ -1,13 +1,19 @@
+"use client";
+
 import PageHeader from "@/components/dashboard/page-header";
 import DialogDelete from "@/components/form/product/DialogDelete";
 import DialogMutation from "@/components/form/product/DialogMutation";
 import { ColumnsProduct } from "@/components/table/product/Columns";
 import { DataTable } from "@/components/table/product/DataTable";
-import prisma from "@/lib/prisma";
-import React from "react";
+import { useProductStore } from "@/store/productStore";
+import React, { useEffect } from "react";
 
-const page = async () => {
-  const products = await prisma.produk.findMany();
+const ProductPage = () => {
+  const { products, fetchProducts } = useProductStore();
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
 
   return (
     <>
@@ -19,4 +25,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default ProductPage;

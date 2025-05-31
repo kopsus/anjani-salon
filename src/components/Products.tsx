@@ -1,23 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import CardProduct from "./card/Product";
 import { TypeProduct } from "@/types/product";
-import supabase from "@/lib/supabase/init";
+import { useProductStore } from "@/store/productStore";
 
 const Products = () => {
-  const [products, setProducts] = useState<TypeProduct[]>([]);
+  const { products, fetchProducts } = useProductStore();
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data, error } = await supabase.from("products").select("*");
-
-      if (error) console.log("error : ", error);
-      else setProducts(data);
-    };
-
     fetchProducts();
-  }, []);
+  }, [fetchProducts]);
 
   return (
     <div className="Container">

@@ -22,33 +22,46 @@ import supabase from "@/lib/supabase/init";
 import { useForm, FormProvider } from "react-hook-form";
 import { useImageUpload } from "@/hooks/useImageUpload";
 import { useServiceStore } from "@/store/serviceStore";
+import { serviceSchema, ServiceSchema } from "@/lib/schemas/service";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CreateService = () => {
   const { fetchServices } = useServiceStore();
   const { previewUrl, handleFileSelect, uploadToSupabase, resetImage } =
     useImageUpload();
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
-  const form = useForm({
+  const form = useForm<ServiceSchema>({
+    resolver: zodResolver(serviceSchema),
     defaultValues: { image: "", title: "", description: "" },
   });
   const { handleSubmit, reset } = form;
 
   const onSubmit = async (data: any) => {
-    const imageUrl = await uploadToSupabase("anjani");
-    if (!imageUrl) return;
+    setLoading(true);
 
-    const payload = { ...data, image: imageUrl };
+    try {
+      const imageUrl = await uploadToSupabase("anjani");
+      if (!imageUrl) return;
 
-    const { error } = await supabase.from("services").insert([payload]);
-    if (error) {
-      toast.error("Gagal menambahkan layanan");
-    } else {
-      reset();
-      resetImage();
-      setOpen(false);
-      toast.success("Berhasil menambahkan service");
-      await fetchServices();
+      const payload = { ...data, image: imageUrl };
+
+      const { error } = await supabase.from("services").insert([payload]);
+      if (error) {
+        toast.error("Gagal menambahkan layanan");
+      } else {
+        reset();
+        resetImage();
+        setOpen(false);
+        toast.success("Berhasil menambahkan service");
+        await fetchServices();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Terjadi kesalahan saat create");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -136,8 +149,12 @@ const CreateService = () => {
                   >
                     Batal
                   </Button>
-                  <Button type="submit" className="text-white">
-                    Simpan
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="text-white"
+                  >
+                    {loading ? "Loading..." : "Simpan"}
                   </Button>
                 </div>
               </form>

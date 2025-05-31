@@ -1,13 +1,19 @@
+"use client";
+
 import CardService from "@/components/card/Service";
 import HeroService from "@/components/hero/Service";
 import PriceListService from "@/components/pricelist/Service";
 import Testimoni from "@/components/Testimoni";
 import Video from "@/components/Video";
-import prisma from "@/lib/prisma";
-import React from "react";
+import { useServiceStore } from "@/store/serviceStore";
+import React, { useEffect } from "react";
 
-const page = async () => {
-  const services = await prisma.service.findMany();
+const ServicePage = () => {
+  const { services, fetchServices } = useServiceStore();
+
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
   return (
     <>
       <HeroService />
@@ -23,4 +29,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default ServicePage;

@@ -3,7 +3,10 @@
 import DialogLayout from "@/components/dialog/DialogLayout";
 import { Button } from "@/components/ui/button";
 import { deleteProduct } from "@/lib/action/product";
+import supabase from "@/lib/supabase/init";
+import { useProductStore } from "@/store/productStore";
 import { storeDialogProduct } from "@/types/product";
+import { deleteImageFromSupabase } from "@/utils/deleteImageFromSupabase";
 import { useAtom } from "jotai";
 import React from "react";
 import { toast } from "react-toastify";
@@ -17,15 +20,21 @@ const DialogDelete = () => {
     }));
   };
 
+  const { fetchProducts } = useProductStore();
+
   const handleDelete = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await deleteProduct(dialog.data?.id!);
 
-    if (res.success) {
-      toast.success(res.success.message);
+    const { error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", dialog.data?.id);
+    if (error) toast.error("Gagal menghapus produk");
+    else {
+      await deleteImageFromSupabase(dialog.data?.image!);
+      await fetchProducts();
+      toast.success("Berhasil menghapus produk");
       closeDialog();
-    } else {
-      toast.error(res.error.message);
     }
   };
 

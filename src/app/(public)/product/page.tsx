@@ -1,11 +1,17 @@
+"use client";
+
 import CardProduct from "@/components/card/Product";
 import HeroProduct from "@/components/hero/Product";
 import Testimoni from "@/components/Testimoni";
-import prisma from "@/lib/prisma";
-import React from "react";
+import { useProductStore } from "@/store/productStore";
+import React, { useEffect } from "react";
 
-const page = async () => {
-  const products = await prisma.produk.findMany();
+const ProductPage = () => {
+  const { products, fetchProducts } = useProductStore();
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
   return (
     <>
       <HeroProduct />
@@ -19,4 +25,4 @@ const page = async () => {
   );
 };
 
-export default page;
+export default ProductPage;
