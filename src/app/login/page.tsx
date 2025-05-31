@@ -17,41 +17,52 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { login } from "@/lib/action/login";
-import { formLoginSchema, FormLoginSchema } from "@/lib/schemas/login";
-import { zodResolver } from "@hookform/resolvers/zod";
+import supabase from "@/lib/supabase/init";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { z } from "zod";
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 const LoginPage = () => {
-  const router = useRouter();
-  // 1. Define your form.
-  const form = useForm<FormLoginSchema>({
-    resolver: zodResolver(formLoginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
+  const form = useForm<LoginForm>({
+    defaultValues: { email: "", password: "" },
   });
+  const router = useRouter();
+  const { isSubmitting } = form.formState;
+  const [error, setError] = React.useState<string | null>(null);
 
-  const isSubmitting = form.formState.isSubmitting;
+  const onSubmit = async (user: LoginForm) => {
+    setError(null);
 
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof formLoginSchema>) {
-    const result = await login(values);
-    if (result.success?.status) {
-      toast.success(result.success.message);
-      // redirect to dashboard
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: user.password,
+    });
+
+    if (error) {
+      setError(error.message);
+      return;
+    }
+
+    if (data.session) {
+      await supabase.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+      });
+    }
+
+    const { data: sessionCheck } = await supabase.auth.getSession();
+
+    if (sessionCheck.session) {
       router.push("/products");
+    } else {
+      setError("Gagal menyimpan sesi login");
     }
-
-    if (result.error?.status) {
-      toast.error(result.error.message);
-    }
-  }
+  };
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-neutral-100 dark:bg-neutral-800 px-4">
@@ -67,13 +78,14 @@ const LoginPage = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="masukkan username"
+                        type="email"
+                        placeholder="example@gmail.com"
                         {...field}
                         required
                       />
@@ -100,6 +112,8 @@ const LoginPage = () => {
                   </FormItem>
                 )}
               />
+
+              {error && <p className="text-sm text-red-500">{error}</p>}
               <Button
                 type="submit"
                 className="w-full mt-3 bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300"

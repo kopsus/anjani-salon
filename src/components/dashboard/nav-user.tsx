@@ -16,12 +16,11 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { TypeUser } from "@/types/user";
-import logout from "@/lib/action/logout";
 import { useRouter } from "next/navigation";
+import supabase from "@/lib/supabase/init";
 
 interface INavUser {
-  dataUser: TypeUser;
+  dataUser: any;
 }
 
 export function NavUser({ dataUser }: INavUser) {
@@ -29,7 +28,7 @@ export function NavUser({ dataUser }: INavUser) {
   const { isMobile } = useSidebar();
 
   const handleLogout = async () => {
-    await logout();
+    await supabase.auth.signOut();
     router.push("/login");
   };
 
@@ -44,7 +43,7 @@ export function NavUser({ dataUser }: INavUser) {
             >
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {dataUser.username}
+                  {dataUser?.user?.email}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -60,7 +59,7 @@ export function NavUser({ dataUser }: INavUser) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {dataUser.username}
+                    {dataUser?.user?.email}
                   </span>
                 </div>
               </div>

@@ -1,27 +1,54 @@
-import { NextRequest, NextResponse } from "next/server";
-import { decrypt } from "./lib/action/session";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  const token = request.cookies.get("session")?.value;
-  const session = token ? await decrypt(token) : null;
-  const isLoginPage = request.nextUrl.pathname === "/login";
+const protectedRoutes = ["/products", "/services"];
+const publicRoutes = ["/login"];
 
-  if (isLoginPage && session) {
-    // Sudah login, tidak boleh akses login page
-    return NextResponse.redirect(new URL("/products", request.url));
-  }
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
 
-  const protectedRoutes = ["/products", "/services"];
-  const isProtected = protectedRoutes.some((route) =>
-    request.nextUrl.pathname.startsWith(route)
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return req.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            res.cookies.set(name, value, options);
+          });
+        },
+      },
+    }
   );
 
-  if (isProtected && !session) {
-    // Belum login, tapi akses halaman privat
-    return NextResponse.redirect(new URL("/login", request.url));
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  const { pathname } = req.nextUrl;
+
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  // ✅ Jika belum login & akses halaman protected → redirect ke login
+  if (!session && isProtectedRoute) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  return NextResponse.next();
+  // ✅ Jika sudah login & akses halaman login → redirect ke products
+  if (session && isPublicRoute) {
+    return NextResponse.redirect(new URL("/products", req.url));
+  }
+
+  return res;
 }
 
 export const config = {
