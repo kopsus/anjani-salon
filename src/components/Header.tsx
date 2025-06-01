@@ -3,17 +3,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
+import { Button as ButtonShadcn } from "../components/ui/button";
 import { Fade as Hamburger } from "hamburger-react";
 import React from "react";
 import { usePathname } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
+import { ShoppingCart } from "lucide-react";
+import { CheckoutModal } from "./dialog/DialogCart";
 
 const Header = () => {
   const [isOpen, setOpen] = React.useState(false);
+  const [isCartOpen, setCartOpen] = React.useState(false);
   const pathname = usePathname();
   const isActiveLink = (href: string) => pathname === href;
   const handleChange = () => {
     setOpen((prev) => !prev);
   };
+
+  const totalItems = useCartStore((state) => state.totalItems());
 
   const menuItems = [
     {
@@ -43,7 +50,7 @@ const Header = () => {
           } flex items-center justify-between p-4 lg:py-3 lg:px-8 max-w-[1400px] mx-auto`}
         >
           <div className="w-16 h-16 overflow-hidden rounded-full p-3 bg-black">
-            <Image src="/logo.jpg" alt="" width={0} height={0} sizes="100vw" />
+            <Image src="/logo.png" alt="" width={0} height={0} sizes="100vw" />
           </div>
           <div
             className={`${
@@ -75,22 +82,37 @@ const Header = () => {
               </Button>
             </div>
           </div>
-          <div className="hidden lg:block">
-            <Button
-              href="/contact"
-              bgColor="bg-black"
-              hoverBgColor="hover:bg-primary"
-              textColor="text-white"
-              borderColor="border border-transparent"
+          <div className="flex items-center gap-4">
+            <div className="hidden lg:block">
+              <Button
+                href="/contact"
+                bgColor="bg-black"
+                hoverBgColor="hover:bg-primary"
+                textColor="text-white"
+                borderColor="border border-transparent"
+              >
+                Kontak
+              </Button>
+            </div>
+
+            <ButtonShadcn
+              onClick={() => setCartOpen(true)}
+              className="relative"
             >
-              Kontak
-            </Button>
+              <ShoppingCart className="w-6 h-6 text-white" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </ButtonShadcn>
           </div>
           <div className="lg:hidden">
             <Hamburger toggled={isOpen} toggle={setOpen} />
           </div>
         </div>
       </div>
+      <CheckoutModal open={isCartOpen} onClose={() => setCartOpen(false)} />
     </header>
   );
 };

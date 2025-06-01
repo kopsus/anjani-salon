@@ -2,8 +2,11 @@
 
 import React from "react";
 import Button from "../Button";
+import { Button as ButtonShadcn } from "@/components/ui/button";
 import Image from "next/image";
 import { TypeService } from "@/types/service";
+import { useCartStore } from "@/store/cartStore";
+import { ShoppingCart } from "lucide-react";
 
 const CardService = ({ item }: { item: TypeService }) => {
   const message = `Halo, saya ingin booking untuk layanan: ${item.title}.`;
@@ -11,6 +14,14 @@ const CardService = ({ item }: { item: TypeService }) => {
 
   const handleToggleDescription = () => {
     setIsExpanded((prev) => !prev);
+  };
+
+  const handleAddToCart = () => {
+    useCartStore.getState().addToCart({
+      id: item.id,
+      title: item.title,
+      quantity: 1,
+    });
   };
 
   return (
@@ -40,13 +51,18 @@ const CardService = ({ item }: { item: TypeService }) => {
           )}
         </div>
       </div>
-      <Button
-        href={`https://wa.me/+6287724002299?text=${encodeURIComponent(
-          message
-        )}`}
-      >
-        Booking Now
-      </Button>
+      <div className="flex items-center justify-between w-full">
+        <Button
+          href={`https://wa.me/+6287724002299?text=${encodeURIComponent(
+            message
+          )}`}
+        >
+          Booking Now
+        </Button>
+        <ButtonShadcn onClick={handleAddToCart} className="text-white">
+          <ShoppingCart />
+        </ButtonShadcn>
+      </div>
     </div>
   );
 };

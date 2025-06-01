@@ -6,6 +6,8 @@ import { TypeProduct } from "@/types/product";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { formatIDR } from "@/lib/format";
+import { useCartStore } from "@/store/cartStore";
+import { ShoppingCart } from "lucide-react";
 
 const CardProduct = ({ item }: { item: TypeProduct }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
@@ -25,6 +27,14 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
 
     // Redirect ke WhatsApp
     window.open(whatsappUrl, "_blank");
+  };
+
+  const handleAddToCart = () => {
+    useCartStore.getState().addToCart({
+      id: item.id,
+      title: item.title,
+      quantity: 1,
+    });
   };
 
   return (
@@ -58,12 +68,17 @@ const CardProduct = ({ item }: { item: TypeProduct }) => {
         <p className="font-bold">{formatIDR(item.price)}</p>
       </div>
 
-      <Button
-        onClick={handleOrderClick}
-        className="text-white rounded-full cursor-pointer w-full"
-      >
-        Order
-      </Button>
+      <div className="grid grid-cols-4 gap-2 w-full">
+        <Button
+          onClick={handleOrderClick}
+          className="text-white rounded-full cursor-pointer w-auto col-span-3"
+        >
+          Order
+        </Button>
+        <Button onClick={handleAddToCart} className="col-span-1 text-white">
+          <ShoppingCart />
+        </Button>
+      </div>
     </Card>
   );
 };
