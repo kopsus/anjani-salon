@@ -4,7 +4,6 @@ import React from "react";
 import Button from "../Button";
 import Image from "next/image";
 import { TypeService } from "@/types/service";
-import { baseIMGURL } from "@/lib/utils";
 
 const CardService = ({ item }: { item: TypeService }) => {
   const message = `Halo, saya ingin booking untuk layanan: ${item.title}.`;
